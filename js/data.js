@@ -118,77 +118,175 @@ window.PHOTOS_TERRITORIO = {
   "piedimonte-festa":     { w:[640,1024,1440], it:"Rievocazione storica serale a Piedimonte Etneo", en:"Evening historical re-enactment in Piedimonte Etneo" }
 };
 
+
+/* -----------------------------------------------------------------------------
+   FOTOGRAFIE DEI LUOGHI (cartella Visit/)
+   -----------------------------------------------------------------------------
+   Immagini di Unsplash, usate secondo la licenza Unsplash. L'attribuzione non è
+   obbligatoria ma la mettiamo comunque: compare in piccolo su ogni fotografia e
+   per esteso nella pagina crediti.html.
+   Autore e id sono ricavati dal nome del file originale, non inventati.
+   Per aggiungerne altre: tools/optimize-visit.py, poi una riga qui sotto.
+   -------------------------------------------------------------------------- */
+window.PHOTOS_VISIT = {
+  "v-alcantara-gole":      { w:[640,1024,1440], a:"Wolfgang Hasselmann",  u:"TMj6xJfKP3U",
+    p:"50% 72%",
+    it:"Le pareti di basalto delle Gole dell'Alcantara viste dal fiume",
+    en:"The basalt walls of the Alcantara Gorges seen from the river" },
+  "v-alcantara-acqua":     { w:[640,1024,1440], a:"Carlo Alberto Burato", u:"F2ExLAPJWqA",
+    p:"50% 48%",
+    it:"L'acqua che scorre tra le colonne di basalto delle Gole dell'Alcantara",
+    en:"Water running between the basalt columns of the Alcantara Gorges" },
+  "v-castelmola-panorama": { w:[640,1024,1440], a:"Umberto di Capua",     u:"2ofYWyFXBBo",
+    p:"50% 80%",
+    it:"La baia di Taormina vista dal belvedere di Castelmola",
+    en:"The bay of Taormina seen from the Castelmola belvedere" },
+  "v-castiglione":         { w:[640,1024,1440], a:"Vitalii Kyktov",       u:"8uNfchHOVZE",
+    it:"Le case di Castiglione di Sicilia aggrappate al versante",
+    en:"The houses of Castiglione di Sicilia clinging to the hillside" },
+  "v-catania-cattedrale":  { w:[640,1024,1440], a:"Mateusz Butkiewicz",   u:"cEYzWTU8PmQ",
+    p:"50% 40%",
+    it:"La cupola della cattedrale di Sant'Agata a Catania",
+    en:"The dome of Sant'Agata cathedral in Catania" },
+  "v-catania-etna":        { w:[640,1024,1440], a:"Samir Kharrat",        u:"XLHOHmKj7g8",
+    it:"Una cupola barocca di Catania con l'Etna in attività sullo sfondo",
+    en:"A baroque dome in Catania with Etna active in the background" },
+  "v-etna-crateri":        { w:[640,1024,1440], a:"Dimitra Karkaveli",    u:"zNtseoD2y58",
+    p:"50% 90%",
+    it:"Fila di escursionisti sul bordo di un cratere dell'Etna",
+    en:"A line of hikers on the rim of an Etna crater" },
+  "v-etna-colata":         { w:[640,1024,1440], a:"Dimitra Karkaveli",    u:"QiYnTJITYfM",
+    p:"50% 38%",
+    it:"Le pendici nere dell'Etna, tra sabbia lavica e prime piante",
+    en:"The black slopes of Etna, between volcanic sand and the first plants" },
+  "v-etna-jeep":           { w:[640,1024,1440], a:"Dimitra Karkaveli",    u:"bvj_BaixSIY",
+    it:"Un mezzo per escursioni sulla strada sterrata che sale sull'Etna",
+    en:"An excursion vehicle on the dirt road climbing Etna" },
+  "v-serracozzo":          { w:[640,1024,1440], a:"Anastasiia Rozumna",   u:"Yjd7r0giPe4",
+    p:"50% 44%",
+    it:"Un cono spento dell'Etna nella zona di Serracozzo, tra sabbia lavica nera ed erba secca",
+    en:"An extinct cone on Etna in the Serracozzo area, between black volcanic sand and dry grass" },
+  "v-etna-eruzione-neve":  { w:[640,1024,1440], a:"Serena Torrisi",       u:"YQvtPMoDyY8",
+    p:"50% 55%",
+    it:"Eruzione dell'Etna sul versante innevato del vulcano",
+    en:"An Etna eruption on the volcano's snow-covered flank" },
+  "v-etna-eruzione":       { w:[640,1024,1440], a:"Serena Torrisi",       u:"UoBlTq81xew",
+    it:"Colata di lava incandescente sull'Etna di notte",
+    en:"Glowing lava flow on Etna at night" },
+  "v-giardini-naxos":      { w:[640,1024,1440], a:"Casey Lovegrove",      u:"RfxclNteIqY",
+    p:"50% 74%",
+    it:"Una via di Giardini Naxos con i balconi e le facciate colorate",
+    en:"A street in Giardini Naxos with balconies and colourful façades" },
+  "v-isola-bella":         { w:[640,1024,1440], a:"Yoav Aziz",            u:"Nnzup-v5Qmc",
+    p:"50% 40%",
+    it:"Isola Bella e la spiaggia di ciottoli che la collega alla costa",
+    en:"Isola Bella and the pebble beach linking it to the shore" },
+  "v-isola-bella-alto":    { w:[640,1024,1440], a:"Thomas Lamars",        u:"NfRy9oMiUBo",
+    p:"50% 40%",
+    it:"Isola Bella vista dall'alto, circondata dall'acqua trasparente",
+    en:"Isola Bella from above, surrounded by clear water" },
+  "v-randazzo":            { w:[640,1024,1440], a:"Jens Aber",            u:"mCod1-FYLGg",
+    it:"Rosone in pietra chiara su un muro di pietra lavica a Randazzo",
+    en:"A pale stone rose window set into a lava-stone wall in Randazzo" },
+  "v-taormina-teatro":     { w:[640,1024,1440], a:"Stepan Dudycha",       u:"N1T_VfHz7FI",
+    it:"Il Teatro Antico di Taormina affacciato sulla baia di Naxos",
+    en:"The Ancient Theatre of Taormina looking over the bay of Naxos" },
+  "v-taormina-costa":      { w:[640,1024,1440], a:"Xihao Liu",            u:"ADOO1jwhXas",
+    p:"50% 85%",
+    it:"Le colonne del Teatro Antico di Taormina e la costa ionica",
+    en:"The columns of Taormina's Ancient Theatre and the Ionian coast" }
+};
+
 /* -----------------------------------------------------------------------------
    PUNTI DI INTERESSE
+   cat è un elenco: una meta può stare in più categorie e comparire sotto
+   ciascun filtro. La prima categoria è quella principale.
+   Categorie in uso: etna | borghi | mare | cultura
    Le distanze sono STRADALI E INDICATIVE, calcolate da Piedimonte Etneo.
    Aggiornale quando inserisci l'indirizzo esatto in config.js.
    -------------------------------------------------------------------------- */
 window.POI = [
-  { cat:"etna", img:"etna-innevato",
+  { cat:["etna"], img:"v-etna-eruzione-neve",
     it:{ n:"Etna Nord, Piano Provenzana", d:"Il versante nord del vulcano: pinete, colate recenti e la partenza delle escursioni verso i crateri sommitali.", km:"circa 30 km", t:"circa 50 min" },
     en:{ n:"Etna North: Piano Provenzana", d:"The volcano's northern slope: pine forests, recent lava flows and the starting point for hikes to the summit craters.", km:"about 30 km", t:"about 50 min" } },
 
-  { cat:"etna", img:"etna-dal-paese",
+  { cat:["etna"], img:"v-etna-crateri",
+    it:{ n:"Escursione ai crateri sommitali", d:"La salita fino a oltre 3000 metri, dove il vulcano fuma davvero. Si va solo con guide alpine o vulcanologiche autorizzate, che forniscono anche casco e attrezzatura: da soli, oltre una certa quota, non si può.", km:"partenza da Piano Provenzana", t:"mezza giornata" },
+    en:{ n:"Hike to the summit craters", d:"The climb above 3,000 metres, where the volcano really does smoke. Only with authorised alpine or volcanological guides, who also provide helmet and equipment: above a certain altitude you cannot go alone.", km:"departs from Piano Provenzana", t:"half a day" } },
+
+  { cat:["etna"], img:"v-etna-colata",
+    it:{ n:"La Valle del Bove", d:"L'enorme conca a ferro di cavallo sul fianco orientale dell'Etna, con pareti alte fino a mille metri: è qui che finiscono quasi tutte le colate. Le escursioni partono dal Rifugio Citelli.", km:"circa 30 km", t:"circa 50 min" },
+    en:{ n:"Valle del Bove", d:"The huge horseshoe-shaped hollow on Etna's eastern flank, with walls up to a thousand metres high: this is where almost every lava flow ends up. Hikes start from Rifugio Citelli.", km:"about 30 km", t:"about 50 min" } },
+
+  { cat:["etna"], img:"v-serracozzo",
+    it:{ n:"Grotta di Serracozzo", d:"Una galleria scavata dalla lava dell'eruzione del 1971, a 1851 metri di quota. Il sentiero parte poco prima del Rifugio Citelli e attraversa boschi di betulle e faggi: circa un chilometro e mezzo a piedi.", km:"circa 30 km", t:"circa 50 min" },
+    en:{ n:"Serracozzo lava cave", d:"A tunnel carved by the lava of the 1971 eruption, at 1,851 metres. The path starts just before Rifugio Citelli and crosses birch and beech woods: about a kilometre and a half on foot.", km:"about 30 km", t:"about 50 min" } },
+
+  { cat:["etna","borghi"], img:"v-etna-jeep",
     it:{ n:"Linguaglossa e la Pineta Ragabo", d:"Il paese-porta dell'Etna nord, con la sua pineta secolare e le strade forestali che salgono verso quota 1800.", km:"circa 8 km", t:"circa 12 min" },
     en:{ n:"Linguaglossa and Pineta Ragabo", d:"The gateway town to northern Etna, with its centuries-old pine wood and forest roads climbing to 1,800 m.", km:"about 8 km", t:"about 12 min" } },
 
-  { cat:"etna", img:"piedimonte-festa",
+  { cat:["cultura","borghi"], img:"piedimonte-festa",
     it:{ n:"Ferrovia Circumetnea", d:"La stazione è a pochi passi dalla casa: il trenino compie il giro del vulcano tra vigne, colate e paesi in pietra lavica.", km:"a pochi passi", t:"" },
     en:{ n:"Circumetnea Railway", d:"The station is a few steps from the house: the little train circles the volcano through vineyards, lava flows and stone villages.", km:"a few steps away", t:"" } },
 
-  { cat:"taormina", img:"taormina-isola-bella",
+  { cat:["borghi","cultura"], img:"v-taormina-teatro",
     it:{ n:"Taormina", d:"Il Teatro Antico affacciato sul mare, Corso Umberto, i giardini della Villa Comunale e i belvedere sulla baia di Naxos.", km:"circa 20 km", t:"circa 30 min" },
     en:{ n:"Taormina", d:"The ancient Greek theatre above the sea, Corso Umberto, the Villa Comunale gardens and the viewpoints over the bay of Naxos.", km:"about 20 km", t:"about 30 min" } },
 
-  { cat:"taormina", img:"taormina-isola-bella",
-    it:{ n:"Isola Bella", d:"Riserva naturale e piccola isola collegata alla spiaggia da una lingua di ciottoli, sotto la rupe di Taormina.", km:"circa 20 km", t:"circa 30 min" },
-    en:{ n:"Isola Bella", d:"A nature reserve and tiny island linked to the beach by a pebble spit, below the Taormina cliff.", km:"about 20 km", t:"about 30 min" } },
+  { cat:["mare"], img:"v-isola-bella",
+    it:{ n:"Isola Bella", d:"Riserva naturale e piccola isola collegata alla spiaggia da una lingua di ciottoli, sotto la rupe di Taormina. Gli scogli sono taglienti: le scarpe da mare non sono un optional.", km:"circa 20 km", t:"circa 30 min" },
+    en:{ n:"Isola Bella", d:"A nature reserve and tiny island linked to the beach by a pebble spit, below the Taormina cliff. The rocks are sharp: water shoes are not optional here.", km:"about 20 km", t:"about 30 min" } },
 
-  { cat:"borghi", img:"etna-innevato",
-    it:{ n:"Castelmola", d:"Il borgo che domina Taormina dall'alto, con la piazza panoramica e il vino alla mandorla.", km:"circa 25 km", t:"circa 40 min" },
-    en:{ n:"Castelmola", d:"The village looking down on Taormina, with its panoramic square and almond wine.", km:"about 25 km", t:"about 40 min" } },
+  { cat:["borghi"], img:"v-castelmola-panorama",
+    it:{ n:"Castelmola", d:"Uno dei Borghi più belli d'Italia, sospeso sopra Taormina: la piazzetta panoramica, il vino alla mandorla e, sulla strada che sale, il santuario rupestre della Madonna della Rocca, scavato nella roccia.", km:"circa 25 km", t:"circa 40 min" },
+    en:{ n:"Castelmola", d:"One of the officially designated Borghi più belli d'Italia, suspended above Taormina: the panoramic little square, almond wine and, on the road up, the rock-cut sanctuary of Madonna della Rocca.", km:"about 25 km", t:"about 40 min" } },
 
-  { cat:"mare", img:"spiaggia-ionica",
+  { cat:["mare"], img:"spiaggia-ionica",
     it:{ n:"Marina di Cottone", d:"Spiaggia di ghiaia e sabbia scura alla foce dell'Alcantara, tra le più vicine alla casa.", km:"circa 9 km", t:"circa 15 min" },
     en:{ n:"Marina di Cottone", d:"Dark sand-and-shingle beach at the mouth of the Alcantara, among the closest to the house.", km:"about 9 km", t:"about 15 min" } },
 
-  { cat:"mare", img:"mare-tramonto",
+  { cat:["mare"], img:"mare-tramonto",
     it:{ n:"Fondachello di Mascali", d:"Lungo litorale di ciottoli lavici, stabilimenti e chioschi, con l'Etna alle spalle.", km:"circa 12 km", t:"circa 20 min" },
     en:{ n:"Fondachello di Mascali", d:"A long lava-pebble shoreline with beach clubs and kiosks, Etna rising behind.", km:"about 12 km", t:"about 20 min" } },
 
-  { cat:"mare", img:"spiaggia-ionica",
+  { cat:["mare"], img:"spiaggia-ionica",
     it:{ n:"San Marco di Calatabiano", d:"Spiaggia ampia e tranquilla ai piedi del castello di Calatabiano.", km:"circa 11 km", t:"circa 18 min" },
     en:{ n:"San Marco di Calatabiano", d:"A wide, quiet beach at the foot of Calatabiano castle.", km:"about 11 km", t:"about 18 min" } },
 
-  { cat:"mare", img:"taormina-isola-bella",
+  { cat:["mare","borghi"], img:"v-giardini-naxos",
     it:{ n:"Giardini Naxos", d:"La prima colonia greca di Sicilia, oggi lungomare, spiagge e il parco archeologico di Naxos.", km:"circa 17 km", t:"circa 25 min" },
     en:{ n:"Giardini Naxos", d:"Sicily's first Greek colony: today a seafront promenade, beaches and the Naxos archaeological park.", km:"about 17 km", t:"about 25 min" } },
 
-  { cat:"natura", img:"etna-innevato",
+  { cat:["etna"], img:"v-alcantara-gole",
     it:{ n:"Gole dell'Alcantara", d:"Pareti di basalto colonnare scavate dal fiume: si scende a piedi fino all'acqua, gelida anche d'estate.", km:"circa 20 km", t:"circa 30 min" },
     en:{ n:"Alcantara Gorges", d:"Columnar basalt walls carved by the river; you walk down to water that stays icy even in summer.", km:"about 20 km", t:"about 30 min" } },
 
-  { cat:"borghi", img:"piedimonte-festa",
+  { cat:["borghi","cultura"], img:"v-castiglione",
+    it:{ n:"Castiglione di Sicilia", d:"Borgo medievale sospeso sulla valle dell'Alcantara, con il castello normanno e la chiesetta bizantina della Cuba in fondo alla valle.", km:"circa 18 km", t:"circa 30 min" },
+    en:{ n:"Castiglione di Sicilia", d:"A medieval village above the Alcantara valley, with its Norman castle and the small Byzantine church of La Cuba down in the valley.", km:"about 18 km", t:"about 30 min" } },
+
+  { cat:["borghi","cultura"], img:"v-randazzo",
     it:{ n:"Randazzo", d:"Città medievale in pietra lavica sul versante nord, rimasta intatta nonostante secoli di eruzioni.", km:"circa 25 km", t:"circa 35 min" },
     en:{ n:"Randazzo", d:"A medieval town built in lava stone on the northern slope, intact despite centuries of eruptions.", km:"about 25 km", t:"about 35 min" } },
 
-  { cat:"borghi", img:"etna-dal-paese",
-    it:{ n:"Forza d'Agrò", d:"Borgo arroccato con vista che spazia dalla costa ionica fino alla Calabria.", km:"circa 30 km", t:"circa 45 min" },
-    en:{ n:"Forza d'Agrò", d:"A hilltop village with views stretching from the Ionian coast to Calabria.", km:"about 30 km", t:"about 45 min" } },
+  { cat:["borghi","cultura"], img:"etna-dal-paese",
+    it:{ n:"Forza d'Agrò", d:"Borgo arroccato con vista fino alla Calabria, le sue antiche chiese e il convento agostiniano del Cinquecento: il chiostro, la sala di San Nicola e le cripte sotterranee dove venivano sepolti i monaci.", km:"circa 30 km", t:"circa 45 min" },
+    en:{ n:"Forza d'Agrò", d:"A hilltop village with views as far as Calabria, its old churches and the sixteenth-century Augustinian convent: the cloister, the hall of San Nicola and the underground crypts where the monks were buried.", km:"about 30 km", t:"about 45 min" } },
 
-  { cat:"cultura", img:"catania-duomo",
-    it:{ n:"Catania", d:"Il barocco di Piazza Duomo e via Crociferi, il mercato della Pescheria e il Castello Ursino.", km:"circa 45 km", t:"circa 40 min" },
-    en:{ n:"Catania", d:"The baroque of Piazza Duomo and Via Crociferi, the Pescheria fish market and Castello Ursino.", km:"about 45 km", t:"about 40 min" } },
+  { cat:["borghi","cultura"], img:"v-catania-cattedrale",
+    it:{ n:"Catania", d:"La cattedrale di Sant'Agata affacciata su Piazza Duomo e, al centro della piazza, l'obelisco sorretto dall'elefante di pietra lavica: u Liotru, simbolo della città. Poi via Crociferi, il mercato della Pescheria e il Castello Ursino.", km:"circa 45 km", t:"circa 40 min" },
+    en:{ n:"Catania", d:"The cathedral of Sant'Agata on Piazza Duomo and, at its centre, the obelisk carried by a lava-stone elephant: u Liotru, the city's emblem. Then Via Crociferi, the Pescheria fish market and Castello Ursino.", km:"about 45 km", t:"about 40 min" } },
 
-  { cat:"cultura", img:"catania-duomo",
+  { cat:["borghi","cultura"], img:"v-catania-etna",
     it:{ n:"Acireale", d:"Barocco settecentesco, la Timpa a picco sul mare e uno dei carnevali più noti d'Italia.", km:"circa 30 km", t:"circa 30 min" },
     en:{ n:"Acireale", d:"Eighteenth-century baroque, the Timpa cliffs above the sea and one of Italy's best-known carnivals.", km:"about 30 km", t:"about 30 min" } },
 
-  { cat:"enogastronomia", img:"balcone-vista-etna",
+  { cat:["cultura"], img:"balcone-vista-etna",
     it:{ n:"Le cantine dell'Etna", d:"Le contrade del versante nord (Solicchiata, Passopisciaro, Rovittello) con i vini Etna DOC da Nerello e Carricante.", km:"da 5 a 20 km", t:"" },
     en:{ n:"Etna wineries", d:"The northern-slope districts (Solicchiata, Passopisciaro, Rovittello), home of Etna DOC wines from Nerello and Carricante.", km:"5 to 20 km", t:"" } },
 
-  { cat:"enogastronomia", img:"piedimonte-festa",
+  { cat:["borghi","cultura"], img:"etna-innevato",
     it:{ n:"Bronte e il pistacchio", d:"Il paese del pistacchio DOP coltivato sulla lava, sul versante occidentale del vulcano.", km:"circa 45 km", t:"circa 1 h" },
     en:{ n:"Bronte and its pistachio", d:"The home of PDO pistachios grown on lava, on the volcano's western slope.", km:"about 45 km", t:"about 1 h" } }
 ];
@@ -218,15 +316,15 @@ window.RECENSIONI = [
 
 /* ------------------------------------------------------------------ itinerari */
 window.ITINERARI = [
-  { img:"etna-innevato", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-etna-colata", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Un giorno sull'Etna", s:["Colazione presto e salita verso Linguaglossa","Piano Provenzana: escursione o jeep verso i crateri","Pranzo in un rifugio della Pineta Ragabo","Rientro lento tra le contrade del vino","Aperitivo in cantina a Passopisciaro"] },
     en:{ t:"A day on Etna", s:["Early breakfast and drive up to Linguaglossa","Piano Provenzana: hike or jeep tour towards the craters","Lunch at a mountain refuge in Pineta Ragabo","Slow return through the wine districts","Sunset tasting at a Passopisciaro winery"] } },
 
-  { img:"taormina-isola-bella", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-isola-bella-alto", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Taormina e Isola Bella", s:["Parcheggio Lumbi o Porta Catania e navetta","Teatro Antico al mattino, prima del caldo","Corso Umberto e Villa Comunale","Funivia per Mazzarò e Isola Bella","Cena a Giardini Naxos sul lungomare"] },
     en:{ t:"Taormina and Isola Bella", s:["Park at Lumbi or Porta Catania and take the shuttle","The Ancient Theatre early, before the heat","Corso Umberto and the Villa Comunale gardens","Cable car down to Mazzarò and Isola Bella","Dinner on the Giardini Naxos seafront"] } },
 
-  { img:"spiaggia-ionica", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-alcantara-acqua", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Una giornata tra mare e lava", s:["Mattina alla spiaggia di Marina di Cottone","Granita e brioche a metà mattina","Pranzo di pesce a Riposto o Torre Archirafi","Pomeriggio alle Gole dell'Alcantara","Tramonto dal balcone di casa"] },
     en:{ t:"A day between sea and lava", s:["Morning at Marina di Cottone beach","Granita and brioche mid-morning","Seafood lunch in Riposto or Torre Archirafi","Afternoon at the Alcantara Gorges","Sunset from the balcony at home"] } },
 
@@ -234,7 +332,7 @@ window.ITINERARI = [
     it:{ t:"Borghi e sapori dell'Etna", s:["Partenza in treno con la Circumetnea","Castiglione di Sicilia e il suo castello","Randazzo, pranzo tra le vie in pietra lavica","Sosta a Bronte per il pistacchio","Rientro con la luce bassa sul vulcano"] },
     en:{ t:"Etna villages and flavours", s:["Depart by train on the Circumetnea railway","Castiglione di Sicilia and its castle","Randazzo: lunch among lava-stone streets","Stop in Bronte for pistachio","Return with low light on the volcano"] } },
 
-  { img:"catania-duomo", badge:"weekend", badgeEn:"weekend",
+  { img:"v-taormina-costa", badge:"weekend", badgeEn:"weekend",
     it:{ t:"Weekend nella Sicilia orientale", s:["Sabato mattina: Catania barocca e la Pescheria","Sabato pomeriggio: Acireale e la Timpa","Domenica mattina: Aci Trezza e i Faraglioni","Domenica pomeriggio: Castelmola e Taormina","Cena di rientro a Piedimonte"] },
     en:{ t:"A weekend in eastern Sicily", s:["Saturday morning: baroque Catania and the fish market","Saturday afternoon: Acireale and the Timpa cliffs","Sunday morning: Aci Trezza and its sea stacks","Sunday afternoon: Castelmola and Taormina","Dinner back in Piedimonte"] } }
 ];

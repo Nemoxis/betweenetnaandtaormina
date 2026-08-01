@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crediti fotografici | Tra il fuoco dell'Etna e Taormina</title>
+<meta name="description" content="Ringraziamenti e crediti dei fotografi delle immagini dei luoghi pubblicate sul sito Tra il fuoco dell'Etna e Taormina.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://nemoxis.github.io/betweenetnaandtaormina/crediti.html">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header is-solid">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 40 32" aria-hidden="true"><path d="M2 30 L15 8 L21 17 L26 11 L38 30 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 8 q1.5 -4 -1 -7 q4 1.5 3.5 5.5" fill="currentColor" opacity=".85"/></svg>
+      <span class="brand-text"><span class="brand-line1">Tra il fuoco dell'Etna</span><span class="brand-line2">e Taormina</span></span>
+    </a>
+  </div>
+</header>
+
+<main class="legal">
+<div class="wrap">
+
+  <h1>Crediti fotografici</h1>
+  <p class="updated">Ultimo aggiornamento: agosto 2026</p>
+
+  <h2>Le fotografie della casa</h2>
+  <p>
+    Tutte le immagini dell'appartamento, dei balconi, della palazzina e delle spiagge
+    qui intorno sono di proprietà della struttura. Nessuna è stata presa da internet:
+    la casa che vedete sul sito è esattamente la casa che troverete.
+  </p>
+
+  <h2>Le fotografie dei luoghi</h2>
+  <p>
+    Per raccontare Taormina, l'Etna, le Gole dell'Alcantara e i paesi intorno abbiamo
+    usato fotografie pubblicate su <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>.
+    La licenza Unsplash consente di usarle liberamente e non impone di citare l'autore,
+    ma ci sembra giusto farlo: senza il loro lavoro questo sito sarebbe molto più povero.
+    Grazie a tutte e tutti.
+  </p>
+
+  <p>Il nome accanto a ogni voce porta alla fotografia originale.</p>
+
+  <ul class="credits-list" id="creditsList">
+    <li>Elenco in caricamento. Se non compare, il file <code>js/data.js</code> non è stato caricato.</li>
+  </ul>
+
+  <h2>Come sono state usate</h2>
+  <p>
+    Le immagini sono state ridimensionate e convertite in WebP e JPEG per non
+    appesantire il sito, senza ritagli che ne cambino il senso. Gli originali restano
+    intatti nella cartella <code>Visit</code> del progetto, con il nome del fotografo
+    e il codice della fotografia nel nome del file.
+  </p>
+
+  <h2>Segnalazioni</h2>
+  <p>
+    Se sei l'autore di una di queste fotografie e preferisci che venga rimossa, oppure
+    vuoi che l'attribuzione sia scritta diversamente, scrivi a
+    <a href="mailto:betweenetnaandtaormina@gmail.com">betweenetnaandtaormina@gmail.com</a>:
+    provvediamo subito.
+  </p>
+
+  <a class="btn btn-outline back" href="index.html">Torna al sito</a>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-bottom">
+    <p>&copy; <span id="y"></span> Tra il fuoco dell'Etna e Taormina</p>
+    <p class="credits">Piedimonte Etneo (CT) · Sicilia</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+/* Costruisce l'elenco dei crediti leggendo gli stessi dati usati dal sito,
+   così non può mai andare fuori sincrono con le fotografie pubblicate. */
+(function () {
+  var v = window.PHOTOS_VISIT || {};
+  var voci = Object.keys(v).map(function (slug) {
+    return { slug: slug, a: v[slug].a, u: v[slug].u, it: v[slug].it };
+  }).sort(function (x, y) { return x.a.localeCompare(y.a, 'it'); });
+
+  var esc = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+
+  document.getElementById('creditsList').innerHTML = voci.map(function (x) {
+    return '<li><a href="https://unsplash.com/photos/' + esc(x.u) + '" target="_blank" rel="noopener noreferrer">' +
+      esc(x.a) + '</a> <span class="cr-desc">' + esc(x.it) + '</span></li>';
+  }).join('');
+
+  var autori = [];
+  voci.forEach(function (x) { if (autori.indexOf(x.a) < 0) autori.push(x.a); });
+  var p = document.createElement('p');
+  p.className = 'updated';
+  p.textContent = voci.length + ' fotografie di ' + autori.length + ' fotografi.';
+  document.getElementById('creditsList').insertAdjacentElement('afterend', p);
+
+  document.getElementById('y').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

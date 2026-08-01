@@ -9,6 +9,9 @@ window.SITE_CONFIG = {
 
   /* ---------------------------------------------------------------- struttura */
   PROPERTY_NAME: "Tra il fuoco dell'Etna e Taormina",
+  // Nome usato quando il sito passa in inglese, nel marchio, nel titolo
+  // dell'hero e nel titolo della scheda del browser.
+  PROPERTY_NAME_EN: "Between Etna and Taormina",
   PROPERTY_SHORT: "Tra il fuoco dell'Etna",
   PROPERTY_TYPE: "Intero appartamento",          // fonte: annuncio Airbnb
   HOST_NAME: "Raffaele",                          // fonte: annuncio Airbnb

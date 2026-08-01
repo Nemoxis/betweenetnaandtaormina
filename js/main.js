@@ -40,7 +40,7 @@ function picture(slug, widths, alt, sizes, opts) {
     '<img src="' + IMG + slug + '-' + w + '.jpg" srcset="' + srcset(slug, widths, 'jpg') + '"' +
       ' sizes="' + sizes + '" alt="' + esc(alt) + '"' +
       ' loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async"' +
-      (opts.ratio ? ' style="aspect-ratio:' + opts.ratio + '"' : '') + '>' +
+      (opts.pos ? ' style="object-position:' + opts.pos + '"' : '') + '>' +
   '</picture>';
 }
 function esc(s) {
@@ -452,10 +452,17 @@ function initLightbox() {
    7. PUNTI DI INTERESSE
    ====================================================================== */
 const POI = window.POI || [];
-const TERR = window.PHOTOS_TERRITORIO || {};
+const TERR  = window.PHOTOS_TERRITORIO || {};
+const VISIT = window.PHOTOS_VISIT || {};
 let poiFilter = 'tutte';
 
+/* Immagine di un luogo, presa da Visit/ (Unsplash) o dalle foto di casa. */
 function terrPic(slug, alt, sizes) {
+  const v = VISIT[slug];
+  /* v.p è il punto di messa a fuoco: dice al browser quale parte tenere quando
+     ritaglia la fotografia per riempire la scheda. Senza, il ritaglio parte dal
+     centro e su molte verticali taglia via proprio il soggetto. */
+  if (v) return picture(slug, v.w, lang === 'en' ? v.en : v.it, sizes, { pos: v.p });
   const meta = TERR[slug];
   if (meta) return picture(slug, meta.w, lang === 'en' ? meta.en : meta.it, sizes);
   const p = PHOTOS.find(x => x.s === slug);
@@ -463,26 +470,41 @@ function terrPic(slug, alt, sizes) {
   return '';
 }
 
+/* Credito del fotografo. L'attribuzione non è obbligatoria con la licenza
+   Unsplash, ma la mostriamo comunque: è giusto verso chi ha scattato. */
+function terrCredit(slug) {
+  const v = VISIT[slug];
+  if (!v) return '';
+  return '<a class="ph-credit" href="https://unsplash.com/photos/' + esc(v.u) + '"' +
+    ' target="_blank" rel="noopener noreferrer nofollow"' +
+    ' title="' + esc(tf('dyn.credit', { a: v.a })) + '">' + esc(v.a) + '</a>';
+}
+
 function buildPOI() {
   const grid = $('#poiGrid'), filters = $('#poiFilters');
   if (!grid || !POI.length) return;
 
+  /* Una meta può avere più categorie: cat è un elenco. Accettiamo anche la
+     forma vecchia con una stringa sola, così i dati restano compatibili. */
+  const catsOf = p => (Array.isArray(p.cat) ? p.cat : [p.cat]);
   const cats = [];
-  POI.forEach(p => { if (cats.indexOf(p.cat) < 0) cats.push(p.cat); });
+  POI.forEach(p => catsOf(p).forEach(c => { if (cats.indexOf(c) < 0) cats.push(c); }));
 
   function render() {
     filters.innerHTML =
       '<button type="button" class="chip" role="tab" data-f="tutte" aria-selected="' + (poiFilter === 'tutte') + '">' + esc(t('poi.tutte')) + '</button>' +
       cats.map(c => '<button type="button" class="chip" role="tab" data-f="' + c + '" aria-selected="' + (poiFilter === c) + '">' + esc(t('cat.' + c)) + '</button>').join('');
 
-    grid.innerHTML = POI.filter(p => poiFilter === 'tutte' || p.cat === poiFilter).map(p => {
+    grid.innerHTML = POI.filter(p => poiFilter === 'tutte' || catsOf(p).indexOf(poiFilter) >= 0).map(p => {
       const d = lang === 'en' ? p.en : p.it;
       const meta = [];
       if (d.km) meta.push('<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>' + esc(d.km) + '</span>');
       if (d.t)  meta.push('<span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' + esc(d.t) + '</span>');
       return '<article class="poi reveal">' +
         '<div class="poi-img">' + terrPic(p.img, d.n, '(min-width:1100px) 28vw, (min-width:640px) 44vw, 92vw') +
-          '<span class="poi-cat">' + esc(t('cat.' + p.cat)) + '</span></div>' +
+          '<span class="poi-cats">' +
+            catsOf(p).map(c => '<span class="poi-cat">' + esc(t('cat.s.' + c)) + '</span>').join('') +
+          '</span>' + terrCredit(p.img) + '</div>' +
         '<div class="poi-body"><h3>' + esc(d.n) + '</h3><p>' + esc(d.d) + '</p>' +
           (meta.length ? '<div class="poi-meta">' + meta.join('') + '</div>' : '') +
         '</div></article>';
@@ -509,6 +531,7 @@ function buildItinerari() {
       const d = lang === 'en' ? it.en : it.it;
       return '<article class="iti reveal">' +
         '<div class="iti-media">' + terrPic(it.img, d.t, '(min-width:1100px) 30vw, (min-width:640px) 46vw, 92vw') + '</div>' +
+        terrCredit(it.img) +
         '<div class="iti-body">' +
           '<span class="iti-badge">' + esc(lang === 'en' ? it.badgeEn : it.badge) + '</span>' +
           '<h3>' + esc(d.t) + '</h3>' +
@@ -613,6 +636,9 @@ function applyLang(next) {
       if (v) el.textContent = v;
     }
   });
+
+  /* anche il titolo della scheda del browser cambia lingua */
+  if (t('dyn.title') !== 'dyn.title') document.title = t('dyn.title');
 
   $$('.lang-btn').forEach(b => {
     const on = b.dataset.lang === lang;

@@ -21,6 +21,14 @@ venv/
 *.log
 node_modules/
 
+# Documentazione interna: resta sul computer, non finisce su GitHub
+README.md
+
+# Originali Unsplash ad altissima risoluzione: 71 MB che al sito non servono,
+# perché usa le derivate in assets/images/optimized/. Restano sul computer e
+# sono comunque riscaricabili da Unsplash (autore e id sono nel nome del file).
+Visit/
+
 # NOTA
 # Le cartelle OldPhoto/ e assets/images/optimized/ NON sono ignorate:
 # le prime sono gli originali delle fotografie, le seconde servono al sito
