@@ -1,0 +1,27 @@
+# File di sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (script di ottimizzazione immagini)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Log e temporanei
+*.log
+node_modules/
+
+# NOTA
+# Le cartelle OldPhoto/ e assets/images/optimized/ NON sono ignorate:
+# le prime sono gli originali delle fotografie, le seconde servono al sito
+# pubblicato. Insieme pesano circa 17 MB, ampiamente sotto i limiti di GitHub.

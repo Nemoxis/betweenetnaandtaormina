@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tra il fuoco dell'Etna e Taormina">
+  <rect width="64" height="64" rx="8" fill="#16130F"/>
+  <path d="M6 52 L25 18 L34 31 L41 22 L58 52 Z" fill="none" stroke="#BE8A3D" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M25 18 q2.5 -7 -1.5 -12 q7 2.5 6 9.5" fill="#A8442A"/>
+</svg>

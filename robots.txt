@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sostituisci il dominio con quello definitivo prima della pubblicazione.
+Sitemap: https://nemoxis.github.io/betweenetnaandtaormina/sitemap.xml
