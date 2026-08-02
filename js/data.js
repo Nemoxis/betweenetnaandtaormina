@@ -333,39 +333,39 @@ window.RECENSIONI = [
 /* ------------------------------------------------------------------ itinerari */
 /* Itinerari: ogni tappa è un luogo, con poche parole che dicono perché. */
 window.ITINERARI = [
-  { img:"v-castelmola-tetti", pos:"50% 60%", badge:"weekend", badgeEn:"weekend",
+  { img:"v-castelmola-tetti", pos:"50% 55%", badge:"weekend", badgeEn:"weekend",
     it:{ t:"Weekend nella Sicilia orientale", s:["Catania, il barocco di Piazza Duomo","La Pescheria, mercato a cielo aperto","Acireale e il ciglio della Timpa","Aci Trezza, i faraglioni del Ciclope","Aci Castello, il maniero sulla lava","Castelmola, con Taormina ai piedi"] },
     en:{ t:"A weekend in eastern Sicily", s:["Catania, the baroque of Piazza Duomo","The Pescheria, an open-air market","Acireale and the edge of the Timpa","Aci Trezza, the Cyclops' sea stacks","Aci Castello, the keep on the lava","Castelmola, with Taormina at its feet"] } },
 
-  { img:"v-etna-colata", pos:"50% 58%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-etna-colata", pos:"50% 35%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Un giorno sull'Etna", s:["Linguaglossa, porta del versante nord","Piano Provenzana, da dove si sale ai crateri","Pineta Ragabo, faggi e betulle a duemila metri","Le contrade del vino, fra le colate","Passopisciaro, l'ultimo bicchiere"] },
     en:{ t:"A day on Etna", s:["Linguaglossa, gateway to the northern slope","Piano Provenzana, where the climb to the craters starts","Pineta Ragabo, beech and birch at two thousand metres","The wine districts, among the lava flows","Passopisciaro, the last glass"] } },
 
-  { img:"v-isola-bella-alto", pos:"50% 50%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-isola-bella-alto", pos:"50% 35%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Taormina e Isola Bella", s:["Teatro Antico, il mare fra le colonne","Corso Umberto, da una porta all'altra","Villa Comunale, giardini sospesi sul golfo","Funivia giù a Mazzarò","Isola Bella, riserva e istmo di ciottoli","Giardini Naxos, lungomare e cena"] },
     en:{ t:"Taormina and Isola Bella", s:["The Ancient Theatre, the sea between the columns","Corso Umberto, from one gate to the other","Villa Comunale, gardens hung above the gulf","Cable car down to Mazzarò","Isola Bella, a reserve on a pebble spit","Giardini Naxos, the seafront and dinner"] } },
 
-  { img:"v-catania-cattedrale", pos:"50% 45%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-catania-cattedrale", pos:"50% 35%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Catania, il primo giorno", s:["Piazza Duomo e u Liotru, l'elefante di lava","Cattedrale di Sant'Agata, e la tomba di Bellini","La Pescheria, meglio prima delle undici","Via Etnea, con il vulcano in fondo alla strada","Quattro Canti, aperitivo quando cala la luce"] },
     en:{ t:"Catania, day one", s:["Piazza Duomo and u Liotru, the lava elephant","Sant'Agata cathedral, and Bellini's tomb","The Pescheria, better before eleven","Via Etnea, the volcano at the end of the street","Quattro Canti, an aperitivo as the light drops"] } },
 
-  { img:"catania-duomo", pos:"50% 45%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"catania-duomo", pos:"50% 40%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Catania sotterranea e barocca", s:["Via Crociferi, quattro chiese in cento metri","Monastero dei Benedettini, fra i più grandi d'Europa","Castello Ursino, circondato dalla lava del 1669","Teatro Romano, incastrato fra i palazzi","Villa Bellini, un'ora d'ombra","Via Santa Filomena, tavoli sulla strada"] },
     en:{ t:"Catania, baroque and underground", s:["Via Crociferi, four churches in a hundred metres","The Benedictine Monastery, among Europe's largest","Castello Ursino, ringed by the lava of 1669","The Roman Theatre, wedged between the buildings","Villa Bellini, an hour of shade","Via Santa Filomena, tables in the street"] } },
 
-  { img:"mare-tramonto", pos:"50% 45%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"mare-tramonto", pos:"50% 35%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Acireale e la riviera dei Ciclopi", s:["Piazza Duomo, barocco fino ai cornicioni","La Timpa, la falesia a picco sul mare","Santa Maria La Scala, borgo di pescatori","Aci Trezza e i suoi faraglioni","Aci Castello, il castello normanno sulla rupe"] },
     en:{ t:"Acireale and the Riviera dei Ciclopi", s:["Piazza Duomo, baroque up to the cornices","The Timpa, the cliff sheer above the sea","Santa Maria La Scala, a fishing hamlet","Aci Trezza and its sea stacks","Aci Castello, the Norman castle on the crag"] } },
 
-  { img:"v-serracozzo", pos:"50% 50%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-serracozzo", pos:"50% 55%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"A piedi sulla Valle del Bove", s:["Rifugio Citelli, quota millesettecento","Sentiero di Serracozzo, fra betulle e faggi","Grotta di Serracozzo, galleria di lava del 1971","Belvedere sulla Valle del Bove"] },
     en:{ t:"On foot above the Valle del Bove", s:["Rifugio Citelli, at seventeen hundred metres","The Serracozzo path, through birch and beech","Serracozzo cave, a lava tunnel from 1971","The Valle del Bove viewpoint"] } },
 
-  { img:"v-alcantara-acqua", pos:"50% 40%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-alcantara-acqua", pos:"50% 35%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Fra mare e lava", s:["Marina di Cottone, ciottoli neri e acqua alta","Riposto, il porto e il pesce del mattino","Torre Archirafi, l'acqua ferrosa","Gole dell'Alcantara, basalto e acqua gelata"] },
     en:{ t:"Between sea and lava", s:["Marina di Cottone, black pebbles and deep water","Riposto, the harbour and the morning catch","Torre Archirafi, its iron-rich water","Alcantara Gorges, basalt and freezing water"] } },
 
-  { img:"v-randazzo", pos:"50% 50%", badge:"1 giorno", badgeEn:"1 day",
+  { img:"v-randazzo", pos:"50% 40%", badge:"1 giorno", badgeEn:"1 day",
     it:{ t:"Borghi e sapori dell'Etna", s:["Ferrovia Circumetnea, il giro del vulcano","Castiglione di Sicilia e il castello normanno","Randazzo, la città tagliata nella pietra nera","Bronte, il pistacchio DOP","Contea di Nelson, il castello dell'ammiraglio"] },
     en:{ t:"Etna villages and flavours", s:["The Circumetnea railway, right around the volcano","Castiglione di Sicilia and its Norman castle","Randazzo, a town cut from black stone","Bronte, home of PDO pistachio","The Nelson estate, the admiral's castle"] } }
 ];

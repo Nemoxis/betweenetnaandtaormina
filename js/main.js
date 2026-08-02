@@ -585,9 +585,9 @@ function terrPic(slug, alt, sizes, posOverride) {
      diversa e il punto giusto non è lo stesso. */
   if (v) return picture(slug, v.w, lang === 'en' ? v.en : v.it, sizes, { pos: posOverride || v.p });
   const meta = TERR[slug];
-  if (meta) return picture(slug, meta.w, lang === 'en' ? meta.en : meta.it, sizes);
+  if (meta) return picture(slug, meta.w, lang === 'en' ? meta.en : meta.it, sizes, { pos: posOverride || meta.p });
   const p = PHOTOS.find(x => x.s === slug);
-  if (p) return picture(p.s, p.w, lang === 'en' ? p.en : p.it, sizes);
+  if (p) return picture(p.s, p.w, lang === 'en' ? p.en : p.it, sizes, { pos: posOverride || p.p });
   return '';
 }
 
@@ -653,17 +653,23 @@ function buildPOI() {
 function buildItinerari() {
   const grid = $('#itiGrid'), list = window.ITINERARI || [];
   if (!grid || !list.length) return;
+  /* Tre blocchi affiancati e non annidati: fotografia, intestazione, tappe.
+     Su schermo largo si impilano in una scheda; sul telefono la stessa
+     marcatura diventa una riga con la fotografia a sinistra. */
   function render() {
     grid.innerHTML = list.map(it => {
       const d = lang === 'en' ? it.en : it.it;
       return '<article class="iti reveal">' +
-        '<div class="iti-media">' + terrPic(it.img, d.t, '(min-width:1100px) 30vw, (min-width:640px) 46vw, 92vw', it.pos) + '</div>' +
-        terrCredit(it.img) +
-        '<div class="iti-body">' +
+        '<div class="iti-media">' +
+          terrPic(it.img, d.t, '(min-width:1100px) 30vw, (min-width:640px) 46vw, 34vw', it.pos) +
+          terrCredit(it.img) +
+        '</div>' +
+        '<div class="iti-head">' +
           '<span class="iti-badge">' + esc(lang === 'en' ? it.badgeEn : it.badge) + '</span>' +
           '<h3>' + esc(d.t) + '</h3>' +
-          '<ol>' + d.s.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol>' +
-        '</div></article>';
+        '</div>' +
+        '<ol class="iti-tappe">' + d.s.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol>' +
+      '</article>';
     }).join('');
     observeReveal();
   }
