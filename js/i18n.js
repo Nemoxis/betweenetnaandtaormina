@@ -144,7 +144,7 @@ window.I18N = {
     "cat.h":"Catania, the city of black stone",
     "cat.lead":"The same mountain you see from the balcony, forty-five kilometres further south, has turned into a city.",
     "cat.p1":"In 1669 the lava ran all the way to the sea, and in 1693 the earthquake finished the job. What you walk through today is a city rebuilt almost all at once, in the same dark stone and the same baroque: since 2002 the centre has been a World Heritage Site along with the other late baroque towns of the Val di Noto.",
-    "cat.p2":"It is a city you smell before you see: the fish at the market, the coffee at the kiosks, brioche straight out of the oven. The baroque comes afterwards, around the corner, and it never stops surprising.",
+    "cat.p2":"It is a city you breathe in and taste before you ever see it: the fish at the market, the coffee at the kiosks, brioche straight out of the oven. The baroque comes afterwards, around the corner, and it never stops surprising.",
     "cat.ph.liotru":"The Elephant fountain, in Piazza del Duomo",
     "cat.ph.liotru.alt":"The Elephant fountain in Piazza del Duomo, Catania, with the obelisk and the lava-stone elephant",
     "cat.ph.crociferi":"Via Crociferi, with the arch stepping over it",

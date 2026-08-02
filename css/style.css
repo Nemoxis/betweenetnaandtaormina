@@ -345,6 +345,10 @@ ul[role="list"]{list-style:none}
 
 .section-head{max-width:60ch;margin-bottom:clamp(2.5rem,5vw,4rem)}
 .section-head h2{margin-bottom:.5em}
+/* L'ultima riga dell'intestazione non aggiunge il proprio margine a quello
+   della testata: altrimenti fra la frase di apertura e il primo paragrafo
+   restava un buco di quasi cento pixel. */
+.section-head > :last-child{margin-bottom:0}
 .section-lead{color:var(--testo-soft);font-size:1.05rem;max-width:56ch}
 .section-dark .section-lead{color:var(--su-scuro-soft)}
 
@@ -726,13 +730,18 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
 /* Il testo corre su due colonne quando c'è spazio: due paragrafi larghi
    lasciavano mezza fascia vuota. Le fotografie stanno sotto, in fila. */
 .cat-testo{margin-bottom:clamp(2.2rem,4vw,3.2rem)}
+/* i paragrafi hanno già il loro margine di base: non se ne aggiunge un altro,
+   e l'ultimo lo perde del tutto per non lasciare un vuoto prima delle foto */
 .cat-testo p{color:var(--su-scuro-soft);max-width:62ch}
-.cat-testo p + p{margin-top:1.1em}
+.cat-testo p:last-child{margin-bottom:0}
 
+/* Sul telefono una fotografia per riga, larga quanto lo schermo: tre in fila
+   sarebbero francobolli, due lascerebbero una casella vuota. */
 .cat-photos{
   display:grid;gap:1.2rem;margin-bottom:clamp(2.6rem,5vw,4rem);
-  grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));
+  grid-template-columns:1fr;
 }
+@media (min-width:640px){.cat-photos{grid-template-columns:repeat(3,1fr)}}
 .cat-ph{margin:0}
 .cat-ph-img{position:relative;border-radius:var(--r-md);overflow:hidden;background:var(--lava-700)}
 .cat-ph img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
@@ -744,12 +753,12 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
   grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));
 }
 .cat-card{background:var(--lava-800);padding:1.6rem 1.5rem 1.75rem}
-@media (min-width:860px){.cat-card-wide{grid-column:span 2}}
+.cat-card-wide{grid-column:1 / -1}
 .cat-card h3{
   font-family:var(--font-display);font-weight:400;font-size:1.12rem;
   color:var(--calce);margin-bottom:.55rem;line-height:1.25;
 }
-.cat-card p{color:var(--su-scuro-soft);font-size:.94rem;line-height:1.68}
+.cat-card p{color:var(--su-scuro-soft);font-size:.94rem;line-height:1.68;margin:0}
 .cat-card b{color:var(--su-scuro);font-weight:500}
 .cat-card i{color:var(--ocra);font-style:italic}
 
@@ -759,15 +768,14 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
   font-family:var(--font-display);font-weight:400;font-size:1.05rem;
   color:var(--calce);margin-bottom:.5rem;
 }
-.cat-note-b p{color:var(--su-scuro-soft);font-size:.94rem;line-height:1.68;max-width:52ch}
+.cat-note-b p{color:var(--su-scuro-soft);font-size:.94rem;line-height:1.68;max-width:52ch;margin:0}
 
 @media (min-width:760px){
   .cat-note{grid-template-columns:1fr 1fr;gap:2.4rem}
 }
 @media (min-width:900px){
   .cat-testo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,3.5rem)}
-  .cat-testo p{max-width:none}
-  .cat-testo p + p{margin-top:0}
+  .cat-testo p{max-width:none;margin-bottom:0}
 }
 
 /* ═══════════════════════════════════════════════════════════ ITINERARI ══ */
@@ -778,31 +786,37 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
    La sfumatura è agganciata al blocco di testo e misurata in pixel, non in
    percentuale: così comincia e finisce nello stesso punto su tutte. */
 .iti{
-  --iti-foto:170px;      /* fotografia in chiaro */
-  --iti-sfuma:88px;      /* passaggio dalla fotografia al nero */
+  --iti-foto:150px;      /* fotografia in chiaro */
+  --iti-sfuma:120px;     /* passaggio dalla fotografia al nero */
   position:relative;border-radius:var(--r-md);overflow:hidden;
   background:#0E0C0A;color:var(--su-scuro);
   display:flex;flex-direction:column;min-height:440px;
-  padding-top:var(--iti-foto);
+  padding-top:calc(var(--iti-foto) + var(--iti-sfuma));
   isolation:isolate;
 }
-/* La fotografia occupa solo la fascia alta più la sfumatura. Sotto è nero
-   pieno: così il ritaglio resta largo e mostra il soggetto invece di una
-   striscia verticale di cielo. */
+/* La fotografia occupa solo la fascia alta più la sfumatura, e la sfumatura
+   sta sopra la fotografia, non sotto il testo: è quindi la stessa identica
+   rampa su tutte le schede, misurata in pixel a partire dal bordo superiore.
+   Il velo iniziale, leggero e costante, smorza le fotografie più chiare e
+   fa cominciare tutte le rampe dallo stesso punto di partenza. */
 .iti-media{
   position:absolute;left:0;right:0;top:0;z-index:-2;
   height:calc(var(--iti-foto) + var(--iti-sfuma));
 }
 .iti-media img{width:100%;height:100%;object-fit:cover}
-.iti-body{
-  flex:1;
-  padding:var(--iti-sfuma) 1.6rem 1.8rem;
+.iti-media::after{
+  content:"";position:absolute;inset:0;
   background:linear-gradient(to bottom,
-    rgba(14,12,10,0)    0,
-    rgba(14,12,10,.42)  calc(var(--iti-sfuma) * .38),
-    rgba(14,12,10,.86)  calc(var(--iti-sfuma) * .72),
-    #0E0C0A             var(--iti-sfuma));
+    rgba(14,12,10,.14) 0,
+    rgba(14,12,10,.14) var(--iti-foto),
+    rgba(14,12,10,.28) calc(var(--iti-foto) + var(--iti-sfuma) * .18),
+    rgba(14,12,10,.47) calc(var(--iti-foto) + var(--iti-sfuma) * .36),
+    rgba(14,12,10,.68) calc(var(--iti-foto) + var(--iti-sfuma) * .54),
+    rgba(14,12,10,.86) calc(var(--iti-foto) + var(--iti-sfuma) * .72),
+    rgba(14,12,10,.96) calc(var(--iti-foto) + var(--iti-sfuma) * .88),
+    #0E0C0A            100%);
 }
+.iti-body{flex:1;padding:0 1.6rem 1.8rem}
 .iti-badge{
   display:inline-block;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;
   font-weight:600;color:var(--ocra);border:1px solid rgba(190,138,61,.5);
@@ -815,7 +829,7 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
   font-size:.87rem;line-height:1.5;color:rgba(237,230,218,.92);
   text-shadow:0 1px 3px rgba(11,9,7,.6);
 }
-@media (max-width:559px){.iti{--iti-foto:200px}}
+@media (max-width:559px){.iti{--iti-foto:190px}}
 .iti li::before{
   content:counter(step);position:absolute;left:0;top:0;
   width:1.15rem;height:1.15rem;border-radius:50%;
