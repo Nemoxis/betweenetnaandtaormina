@@ -47,10 +47,26 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 }
 
+/* Rimanda l'esecuzione finché gli eventi non smettono di arrivare: utile per
+   il ridimensionamento della finestra, che ne genera decine al secondo. */
+function debounce(fn, ms) {
+  let id;
+  return function () {
+    clearTimeout(id);
+    const args = arguments, self = this;
+    id = setTimeout(() => fn.apply(self, args), ms);
+  };
+}
+
 /* =========================================================================
    1. CONFIGURAZIONE → PAGINA  (CIN, CIR, contatti, anno, mappa)
    ====================================================================== */
 function isTodo(v) { return !v || /^\[/.test(String(v).trim()); }
+
+/* I nomi di chi accoglie: in inglese la congiunzione cambia. */
+function hostNames() {
+  return (lang !== 'it' && CFG.HOST_NAME_EN) ? CFG.HOST_NAME_EN : CFG.HOST_NAME;
+}
 
 /* Stringa da passare a Google Maps: pulita, senza parentesi né abbreviazioni. */
 function mapQuery() {
@@ -117,7 +133,7 @@ function applyConfig() {
   /* anno di inizio attività dell'host */
   const hl = $('#hostLine');
   if (hl && CFG.HOST_SINCE_YEAR)
-    hl.textContent = tf('dyn.host', { n: CFG.HOST_NAME, y: CFG.HOST_SINCE_YEAR });
+    hl.textContent = tf('dyn.host', { n: hostNames(), y: CFG.HOST_SINCE_YEAR });
 }
 
 const ICON = {
@@ -237,90 +253,193 @@ function initModal() {
 const PHOTOS = window.PHOTOS || [];
 let carIndex = 0;
 
+/* -----------------------------------------------------------------------------
+   Il carosello scorre da solo, senza sosta. Le fotografie sono stampate due
+   volte di seguito: quando la prima serie è finita riportiamo la posizione
+   all'inizio della seconda, che in quel momento mostra esattamente la stessa
+   cosa. L'occhio non se ne accorge e il nastro sembra infinito.
+   Le frecce, la tastiera, il dito e il trackpad continuano a funzionare:
+   qualunque intervento mette in pausa lo scorrimento e lo fa riprendere dopo.
+   Il pulsante di pausa è obbligatorio: WCAG 2.2.2 chiede sempre un modo per
+   fermare ciò che si muove da solo.
+   -------------------------------------------------------------------------- */
+const CAR_SPEED = 34;          /* pixel al secondo */
+const CAR_RESUME = 2600;       /* pausa dopo un gesto dell'utente, in ms */
+
+const car = {
+  vp: null, track: null,
+  pos: 0, loopW: 0, slideW: 0,
+  running: false, userPaused: false,
+  holdUntil: 0, lastT: 0, lastWritten: -1,
+  tweenTo: null
+};
+
 function buildCarousel() {
   const track = $('#carTrack'), vp = $('#carViewport');
-  if (!track || !PHOTOS.length) return;
+  if (!track || !vp || !PHOTOS.length) return;
+  car.track = track; car.vp = vp;
 
-  track.innerHTML = PHOTOS.map((p, i) =>
-    '<li class="car-slide' + (i === 0 ? ' is-current' : '') + '" data-i="' + i + '">' +
-      '<button type="button" data-lb="' + i + '" aria-label="' + esc(p.it) + ' (ingrandisci)">' +
-        picture(p.s, p.w, p.it, '(min-width:1400px) 56vw, (min-width:760px) 64vw, 92vw', { eager: i < 2 }) +
+  /* due giri identici: il secondo serve solo a coprire il salto */
+  const slide = (p, i, clone) =>
+    '<li class="car-slide" data-i="' + i + '"' + (clone ? ' aria-hidden="true"' : '') + '>' +
+      '<button type="button" data-lb="' + i + '"' + (clone ? ' tabindex="-1"' : '') +
+        ' aria-label="' + esc(p.it) + ' (ingrandisci)">' +
+        picture(p.s, p.w, p.it, '(min-width:1600px) 28vw, (min-width:1200px) 34vw, (min-width:760px) 46vw, 82vw',
+                { eager: !clone && i < 3 }) +
       '</button>' +
-    '</li>').join('');
+    '</li>';
 
-  /* pallini */
-  const dots = $('#carDots');
-  dots.innerHTML = PHOTOS.map((p, i) =>
-    '<button type="button" role="tab" data-go="' + i + '" aria-selected="' + (i === 0) + '"' +
-    ' aria-label="' + esc(tf('dyn.slide', { i: i + 1, n: PHOTOS.length })) + '"></button>').join('');
-  dots.addEventListener('click', e => {
-    const b = e.target.closest('[data-go]'); if (b) goTo(+b.dataset.go);
-  });
+  track.innerHTML =
+    PHOTOS.map((p, i) => slide(p, i, false)).join('') +
+    PHOTOS.map((p, i) => slide(p, i, true)).join('');
 
-  $('#carPrev').addEventListener('click', () => goTo(carIndex - 1));
-  $('#carNext').addEventListener('click', () => goTo(carIndex + 1));
+  $('#carPrev').addEventListener('click', () => step(-1));
+  $('#carNext').addEventListener('click', () => step(1));
 
-  /* tastiera sul viewport */
+  const play = $('#carPlay');
+  if (play) play.addEventListener('click', () => setPaused(!car.userPaused));
+
+  /* tastiera */
   vp.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(carIndex + 1); }
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(carIndex - 1); }
-    if (e.key === 'Home')       { e.preventDefault(); goTo(0); }
-    if (e.key === 'End')        { e.preventDefault(); goTo(PHOTOS.length - 1); }
-    if (e.key === 'Enter' || e.key === ' ') {
-      const cur = track.querySelector('.car-slide.is-current button');
-      if (cur) { e.preventDefault(); cur.click(); }
-    }
+    if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    else if (e.key === 'Home') { e.preventDefault(); hold(); car.tweenTo = 0; }
+    else if (e.key === ' ') { e.preventDefault(); setPaused(!car.userPaused); }
   });
 
-  /* lo swipe è gestito nativamente dallo scroll-snap: qui leggiamo il risultato */
-  let raf;
+  /* il puntatore e il dito fermano il nastro finché restano lì */
+  const wrapEl = $('#carousel');
+  wrapEl.addEventListener('pointerenter', hold);
+  wrapEl.addEventListener('pointermove', hold);
+  wrapEl.addEventListener('pointerdown', hold);
+  wrapEl.addEventListener('touchstart', hold, { passive: true });
+  wrapEl.addEventListener('focusin', hold);
+
+  /* se l'utente trascina o usa il trackpad, la posizione vera è quella */
   vp.addEventListener('scroll', () => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => syncIndex(false));
+    if (Math.abs(vp.scrollLeft - car.lastWritten) > 2) {
+      car.pos = vp.scrollLeft;
+      car.tweenTo = null;
+      hold();
+    }
   }, { passive: true });
 
-  /* apertura lightbox */
   track.addEventListener('click', e => {
     const b = e.target.closest('[data-lb]');
     if (b) openLightbox(PHOTOS, +b.dataset.lb);
   });
 
+  /* quando la scheda non è visibile non serve consumare batteria */
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopLoop(); else startLoop();
+  });
+
   const gc = $('#galCount');
   if (gc) gc.textContent = tf('dyn.galCount', { n: PHOTOS.length });
 
-  syncIndex(true);
+  measure();
+  window.addEventListener('resize', debounce(measure, 200));
+  if (window.ResizeObserver) new ResizeObserver(debounce(measure, 200)).observe(track);
+
+  /* chi ha chiesto meno animazioni trova il nastro già fermo */
+  setPaused(REDUCED);
+  paint();
+  if (!REDUCED) startLoop();
 }
 
-function goTo(i) {
-  const vp = $('#carViewport'), slides = $$('.car-slide');
-  if (!slides.length) return;
-  i = (i + slides.length) % slides.length;
-  const s = slides[i];
-  vp.scrollTo({
-    left: s.offsetLeft - (vp.clientWidth - s.offsetWidth) / 2,
-    behavior: REDUCED ? 'auto' : 'smooth'
-  });
-  carIndex = i;
+function measure() {
+  const slides = car.track ? car.track.children : null;
+  if (!slides || !slides.length) return;
+  const n = PHOTOS.length;
+  car.slideW = slides[0].getBoundingClientRect().width || 0;
+  /* larghezza esatta del primo giro: dall'inizio del primo al bordo del clone */
+  car.loopW = slides[n] ? slides[n].offsetLeft - slides[0].offsetLeft : car.slideW * n;
+  if (car.loopW > 0) car.pos = ((car.pos % car.loopW) + car.loopW) % car.loopW;
+  write();
   paint();
 }
 
-function syncIndex(force) {
-  const vp = $('#carViewport'), slides = $$('.car-slide');
-  if (!slides.length) return;
-  const center = vp.scrollLeft + vp.clientWidth / 2;
-  let best = 0, bestD = Infinity;
-  slides.forEach((s, i) => {
-    const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - center);
-    if (d < bestD) { bestD = d; best = i; }
-  });
-  if (best !== carIndex || force) { carIndex = best; paint(); }
+function hold() {
+  car.holdUntil = performance.now() + CAR_RESUME;
 }
 
-function paint() {
-  $$('.car-slide').forEach((s, i) => s.classList.toggle('is-current', i === carIndex));
-  $$('#carDots button').forEach((b, i) => b.setAttribute('aria-selected', String(i === carIndex)));
-  const cap = $('#carCaption'), p = PHOTOS[carIndex];
-  if (cap && p) cap.textContent = (carIndex + 1) + ' / ' + PHOTOS.length + ' · ' + (lang === 'en' ? p.en : p.it);
+function setPaused(v) {
+  car.userPaused = !!v;
+  const b = $('#carPlay'), c = $('#carousel');
+  if (c) c.classList.toggle('is-paused', car.userPaused);
+  if (b) {
+    b.setAttribute('aria-pressed', String(car.userPaused));
+    b.setAttribute('aria-label', t(car.userPaused ? 'gal.play' : 'gal.pause'));
+  }
+  if (car.userPaused) stopLoop(); else startLoop();
+}
+
+function startLoop() {
+  if (car.running || car.userPaused || document.hidden) return;
+  car.running = true;
+  car.lastT = performance.now();
+  requestAnimationFrame(tick);
+}
+
+function stopLoop() { car.running = false; }
+
+function tick(now) {
+  if (!car.running) return;
+  /* mai negativo, mai enorme: se la scheda è rimasta indietro non recuperiamo
+     il tempo perduto tutto insieme, riprendiamo semplicemente da dove eravamo. */
+  const dt = Math.max(0, Math.min((now - car.lastT) / 1000, 0.05));
+  car.lastT = now;
+
+  if (car.tweenTo != null) {
+    /* piccolo scorrimento verso la fotografia richiesta con le frecce */
+    const d = car.tweenTo - car.pos;
+    if (Math.abs(d) < 0.6) { car.pos = car.tweenTo; car.tweenTo = null; }
+    else car.pos += d * Math.min(1, dt * 9);
+  } else if (now >= car.holdUntil) {
+    car.pos += CAR_SPEED * dt;
+  }
+
+  write();
+  paint();
+  requestAnimationFrame(tick);
+}
+
+/* riporta la posizione dentro il primo giro e la scrive sul viewport */
+function write() {
+  const vp = car.vp;
+  if (!vp || car.loopW <= 0) return;
+  if (car.pos >= car.loopW) { car.pos -= car.loopW; if (car.tweenTo != null) car.tweenTo -= car.loopW; }
+  else if (car.pos < 0)     { car.pos += car.loopW; if (car.tweenTo != null) car.tweenTo += car.loopW; }
+  car.lastWritten = car.pos;
+  vp.scrollLeft = car.pos;
+}
+
+/* una freccia sposta di una fotografia esatta */
+function step(dir) {
+  hold();
+  const w = car.slideW || 1;
+  const base = car.tweenTo != null ? car.tweenTo : car.pos;
+  car.tweenTo = (dir > 0 ? Math.floor(base / w) + 1 : Math.ceil(base / w) - 1) * w;
+  if (!car.running) { write(); paint(); car.tweenTo = null; startLoop(); }
+}
+
+/* didascalia e barra di avanzamento seguono la fotografia al centro */
+function paint(force) {
+  const n = PHOTOS.length;
+  if (!n) return;
+  let idx = carIndex;
+  if (car.slideW > 0 && car.vp) {
+    idx = Math.round((car.pos + car.vp.clientWidth / 2 - car.slideW / 2) / car.slideW);
+    idx = ((idx % n) + n) % n;
+  }
+  const bar = $('#carProg');
+  if (bar && car.loopW > 0) bar.style.width = (100 * car.pos / car.loopW).toFixed(2) + '%';
+
+  const cap = $('#carCaption');
+  if (!force && idx === carIndex && cap && cap.textContent) return;
+  carIndex = idx;
+  const p = PHOTOS[idx];
+  if (cap && p) cap.textContent = (idx + 1) + ' / ' + n + ' · ' + (lang === 'en' ? p.en : p.it);
 }
 
 /* =========================================================================
@@ -457,12 +576,14 @@ const VISIT = window.PHOTOS_VISIT || {};
 let poiFilter = 'tutte';
 
 /* Immagine di un luogo, presa da Visit/ (Unsplash) o dalle foto di casa. */
-function terrPic(slug, alt, sizes) {
+function terrPic(slug, alt, sizes, posOverride) {
   const v = VISIT[slug];
   /* v.p è il punto di messa a fuoco: dice al browser quale parte tenere quando
      ritaglia la fotografia per riempire la scheda. Senza, il ritaglio parte dal
-     centro e su molte verticali taglia via proprio il soggetto. */
-  if (v) return picture(slug, v.w, lang === 'en' ? v.en : v.it, sizes, { pos: v.p });
+     centro e su molte verticali taglia via proprio il soggetto.
+     posOverride serve quando la stessa foto compare in due riquadri di forma
+     diversa e il punto giusto non è lo stesso. */
+  if (v) return picture(slug, v.w, lang === 'en' ? v.en : v.it, sizes, { pos: posOverride || v.p });
   const meta = TERR[slug];
   if (meta) return picture(slug, meta.w, lang === 'en' ? meta.en : meta.it, sizes);
   const p = PHOTOS.find(x => x.s === slug);
@@ -474,10 +595,16 @@ function terrPic(slug, alt, sizes) {
    Unsplash, ma la mostriamo comunque: è giusto verso chi ha scattato. */
 function terrCredit(slug) {
   const v = VISIT[slug];
-  if (!v) return '';
-  return '<a class="ph-credit" href="https://unsplash.com/photos/' + esc(v.u) + '"' +
-    ' target="_blank" rel="noopener noreferrer nofollow"' +
-    ' title="' + esc(tf('dyn.credit', { a: v.a })) + '">' + esc(v.a) + '</a>';
+  if (v) {
+    return '<a class="ph-credit" href="https://unsplash.com/photos/' + esc(v.u) + '"' +
+      ' target="_blank" rel="noopener noreferrer nofollow"' +
+      ' title="' + esc(tf('dyn.credit', { a: v.a })) + '">' + esc(v.a) + '</a>';
+  }
+  /* Anche le fotografie di casa portano la loro firma: nessuna immagine
+     resta senza indicazione di chi l'ha scattata. */
+  if (TERR[slug] || PHOTOS.some(x => x.s === slug))
+    return '<span class="ph-credit ph-credit-casa">' + esc(t('dyn.creditCasa')) + '</span>';
+  return '';
 }
 
 function buildPOI() {
@@ -530,7 +657,7 @@ function buildItinerari() {
     grid.innerHTML = list.map(it => {
       const d = lang === 'en' ? it.en : it.it;
       return '<article class="iti reveal">' +
-        '<div class="iti-media">' + terrPic(it.img, d.t, '(min-width:1100px) 30vw, (min-width:640px) 46vw, 92vw') + '</div>' +
+        '<div class="iti-media">' + terrPic(it.img, d.t, '(min-width:1100px) 30vw, (min-width:640px) 46vw, 92vw', it.pos) + '</div>' +
         terrCredit(it.img) +
         '<div class="iti-body">' +
           '<span class="iti-badge">' + esc(lang === 'en' ? it.badgeEn : it.badge) + '</span>' +
@@ -625,15 +752,29 @@ function applyLang(next) {
   lang = next;
   document.documentElement.lang = lang;
 
-  /* testi statici marcati con data-i18n */
+  /* Testi statici marcati con data-i18n. Usiamo innerHTML e non textContent
+     perché alcune voci contengono marcatura (per esempio i grassetti
+     nell'elenco dei collegamenti). Le stringhe sono tutte nostre. */
   $$('[data-i18n]').forEach(el => {
     const k = el.getAttribute('data-i18n');
     if (lang === 'it') {
-      if (el.dataset.it != null) el.textContent = el.dataset.it;
+      if (el.dataset.it != null) el.innerHTML = el.dataset.it;
     } else {
-      if (el.dataset.it == null) el.dataset.it = el.textContent;
+      if (el.dataset.it == null) el.dataset.it = el.innerHTML;
       const v = window.I18N[lang] && window.I18N[lang][k];
-      if (v) el.textContent = v;
+      if (v) el.innerHTML = v;
+    }
+  });
+
+  /* Testo alternativo delle immagini scritte direttamente nell'HTML. */
+  $$('[data-i18n-alt]').forEach(el => {
+    const k = el.getAttribute('data-i18n-alt');
+    if (lang === 'it') {
+      if (el.dataset.itAlt != null) el.alt = el.dataset.itAlt;
+    } else {
+      if (el.dataset.itAlt == null) el.dataset.itAlt = el.alt;
+      const v = window.I18N[lang] && window.I18N[lang][k];
+      if (v) el.alt = v;
     }
   });
 
@@ -647,14 +788,16 @@ function applyLang(next) {
   });
 
   /* blocchi generati da JS */
-  paint();
+  paint(true);
+  const cp = $('#carPlay');
+  if (cp) cp.setAttribute('aria-label', t(car.userPaused ? 'gal.play' : 'gal.pause'));
   if (window.__renderGallery) window.__renderGallery();
   if (window.__renderPOI) window.__renderPOI();
   if (window.__renderIti) window.__renderIti();
   buildContacts();
   renderReviews();
   const hl = $('#hostLine');
-  if (hl && CFG.HOST_SINCE_YEAR) hl.textContent = tf('dyn.host', { n: CFG.HOST_NAME, y: CFG.HOST_SINCE_YEAR });
+  if (hl && CFG.HOST_SINCE_YEAR) hl.textContent = tf('dyn.host', { n: hostNames(), y: CFG.HOST_SINCE_YEAR });
   const gc = $('#galCount'); if (gc) gc.textContent = tf('dyn.galCount', { n: PHOTOS.length });
   const btn = $('#openAll'); if (btn) btn.textContent = $('#galGrid').hidden ? t('gal.all') : t('gal.close');
   const rl = $('#ratingLine');
@@ -714,7 +857,6 @@ function boot() {
   initLang();
   $$('.section-head, .intro-text, .intro-figure, .feature, .room').forEach(el => el.classList.add('reveal'));
   observeReveal();
-  window.addEventListener('resize', () => syncIndex(true), { passive: true });
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

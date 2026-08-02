@@ -131,6 +131,7 @@
         <li><a href="#recensioni" data-i18n="nav.recensioni">Recensioni</a></li>
         <!-- Sul menu a tendina del telefono c'è spazio: qui compare anche
              "Itinerari", che sulla barra orizzontale resterebbe troppo stretta. -->
+        <li class="nav-extra"><a href="#catania" data-i18n="nav.catania">Catania</a></li>
         <li class="nav-extra"><a href="#itinerari" data-i18n="nav.itinerari">Itinerari</a></li>
         <li><a href="#contatti"   data-i18n="nav.contatti">Contatti</a></li>
       </ul>
@@ -178,8 +179,8 @@
       <span class="hero-title-2" data-i18n="brand.2">e Taormina</span>
     </h1>
     <p class="hero-sub" data-i18n="hero.sub">
-      Una casa affacciata sul vulcano, a venti minuti dal mare Ionio.
-      Da qui la Sicilia orientale comincia sul balcone.
+      Dove il respiro caldo dell'Etna incontra l'azzurro dello Ionio,
+      tra il silenzio della montagna e il profumo del mare.
     </p>
 
     <div class="hero-actions">
@@ -193,7 +194,7 @@
       <li><strong>6</strong> <span data-i18n="facts.ospiti">ospiti</span></li>
       <li><strong>3</strong> <span data-i18n="facts.camere">camere</span></li>
       <li><strong>2</strong> <span data-i18n="facts.bagni">bagni</span></li>
-      <li data-i18n="facts.vista">Vista Etna</li>
+      <li><strong>1º</strong> <span data-i18n="facts.piano">piano</span></li>
     </ul>
   </div>
 
@@ -209,26 +210,26 @@
       <p class="eyebrow" data-i18n="intro.eyebrow">La casa</p>
       <h2 data-i18n="intro.h">Benvenuti tra l'Etna e Taormina</h2>
       <p data-i18n="intro.p1">
-        Piedimonte Etneo sta esattamente nel mezzo: alle spalle il versante nord del
-        vulcano, davanti la riviera ionica che scende verso Giardini Naxos e Taormina.
-        È un paese di lava e agrumi, dove la vita scorre più lenta che sulla costa e
-        dove, la sera, l'aria arriva già fresca dalla montagna.
+        Piedimonte sta nel punto esatto in cui l'Etna smette di essere montagna e
+        diventa campagna. Alle spalle il versante nord, con i suoi boschi e le colate
+        vecchie di trent'anni. Davanti la riviera che scivola verso Naxos. Un paese di
+        pietra scura e di agrumi, dove verso le otto di sera l'aria cambia e scende
+        fresca da sopra, anche in pieno agosto.
       </p>
       <p data-i18n="intro.p2">
-        L'appartamento occupa il primo piano di una palazzina tranquilla, con ascensore.
-        Tre camere, due bagni e ampi balconi da cui l'Etna si vede per intero: è la stessa
-        vista che trovate nella prima fotografia di questo sito. La cucina è attrezzata
-        davvero, dalle pentole ai taglieri, per chi ha voglia di comprare al mercato e
-        mettersi ai fornelli. Lenzuola e asciugamani sono forniti; il parcheggio in strada
-        è libero e gratuito.
+        L'appartamento è al primo piano di una palazzina quieta, con ascensore. Tre
+        camere, due bagni, balconi abbastanza larghi da apparecchiarci. Dalla parte del
+        vulcano l'Etna si vede per intero, dal cono innevato ai paesi di mezza costa.
+        La cucina è attrezzata sul serio, pentole e taglieri compresi, per chi ha voglia
+        di passare dal mercato e mettersi ai fornelli. Lenzuola e asciugamani ci sono.
+        Il parcheggio in strada è libero.
       </p>
       <p data-i18n="intro.p3">
-        Lo svincolo di Fiumefreddo di Sicilia, sulla A18 Messina-Catania, è a pochi minuti
-        di auto. È il vantaggio meno appariscente della casa e forse il più utile: da qui
-        si raggiunge tutta la Sicilia orientale senza attraversare i paesi della costa.
+        Lo svincolo di Fiumefreddo, sulla A18 Messina-Catania, è a pochi minuti di
+        strada: da qui tutta la Sicilia orientale, e non solo, si raggiunge in fretta.
       </p>
       <p class="intro-host" id="hostLine">
-        Ad accogliervi è Raffaele, che ospita qui dal 2012.
+        Ad accogliervi sono Raffaele e Pina, che ospitano qui dal 2012.
       </p>
       <p class="rating-line" id="ratingLine" hidden></p>
     </div>
@@ -252,7 +253,7 @@
       <p class="eyebrow" data-i18n="casa.eyebrow">Spazi e servizi</p>
       <h2 data-i18n="casa.h">Cosa trovate nell'appartamento</h2>
       <p class="section-lead" data-i18n="casa.lead">
-        Tutto quello che segue è verificato sull'annuncio ufficiale della casa.
+        Quello che segue è preso dall'annuncio ufficiale, senza aggiunte.
       </p>
     </header>
 
@@ -372,7 +373,7 @@
 
   <!-- carosello -->
   <div class="carousel" id="carousel" role="group" aria-roledescription="carosello" aria-label="Fotografie dell'appartamento">
-    <div class="carousel-viewport" id="carViewport" tabindex="0" aria-live="polite">
+    <div class="carousel-viewport" id="carViewport" tabindex="0">
       <ul class="carousel-track" id="carTrack" role="list"><!-- generato da main.js --></ul>
     </div>
 
@@ -387,7 +388,13 @@
 
     <div class="car-bar wrap">
       <p class="car-caption" id="carCaption"></p>
-      <div class="car-dots" id="carDots" role="tablist" aria-label="Scegli la fotografia"></div>
+      <div class="car-tools">
+        <button type="button" class="car-play" id="carPlay" aria-pressed="false" aria-label="Metti in pausa lo scorrimento">
+          <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+          <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+        </button>
+        <div class="car-prog" aria-hidden="true"><span id="carProg"></span></div>
+      </div>
     </div>
   </div>
 
@@ -405,44 +412,80 @@
 
 <!-- ══════════════════════════════════════════════════════ DOVE SIAMO ══ -->
 <section class="section section-dark" id="dove">
-  <div class="wrap grid-dove">
-    <div class="dove-text">
-      <p class="eyebrow" data-i18n="dove.eyebrow">Dove siamo</p>
-      <h2 data-i18n="dove.h">Nel mezzo, che è il posto giusto</h2>
-      <p data-i18n="dove.p1">
-        Piedimonte Etneo si trova sul versante nord-orientale dell'Etna, a mezza costa
-        tra il Parco del vulcano e il mare Ionio. È una posizione di passaggio: si sale
-        verso Linguaglossa e Piano Provenzana in una manciata di minuti, si scende alle
-        spiagge di Marina di Cottone e Fondachello in un quarto d'ora, si arriva a
-        Taormina in circa mezz'ora.
-      </p>
-      <p data-i18n="dove.p2">
-        A pochi passi dalla casa c'è la stazione della Ferrovia Circumetnea, il trenino
-        che gira attorno al vulcano toccando Castiglione di Sicilia, Randazzo, Bronte e
-        la Contea di Nelson: un modo diverso, e più lento, di vedere l'Etna.
-      </p>
+  <div class="wrap">
 
-      <ul class="dist-list" role="list">
-        <li><span>Marina di Cottone</span><b data-i18n="d.15">15 min</b></li>
-        <li><span>Fondachello</span><b data-i18n="d.20">20 min</b></li>
-        <li><span>Giardini Naxos</span><b data-i18n="d.25">25 min</b></li>
-        <li><span>Taormina</span><b data-i18n="d.30">30 min</b></li>
-        <li><span>Gole dell'Alcantara</span><b data-i18n="d.30b">30 min</b></li>
-        <li><span>Catania</span><b data-i18n="d.40">40 min</b></li>
-      </ul>
-      <p class="micro-note" data-i18n="dove.nota">
-        Tempi di percorrenza in auto, indicativi, calcolati da Piedimonte Etneo.
-      </p>
+    <!-- Prima fascia: il racconto a sinistra, la mappa a destra.
+         Le informazioni pratiche stanno sotto, a tutta larghezza: così la
+         colonna di destra non resta mezza vuota sui monitor larghi. -->
+    <div class="grid-dove">
+      <div class="dove-text">
+        <p class="eyebrow" data-i18n="dove.eyebrow">Dove siamo</p>
+        <h2 data-i18n="dove.h">Nel mezzo, che è il posto giusto</h2>
+        <p data-i18n="dove.p1">
+          Piedimonte sta sul versante nord-orientale dell'Etna, sospeso fra il Parco del
+          vulcano e lo Ionio. È una posizione di passaggio, e si sente: in una manciata di
+          minuti si è a Linguaglossa e si sale verso Piano Provenzana, in un quarto d'ora
+          si scende sulla ghiaia nera di Marina di Cottone, in mezz'ora si è sotto il
+          Teatro Antico di Taormina.
+        </p>
+        <p data-i18n="dove.p2">
+          A pochi passi dal portone c'è la stazione della Ferrovia Circumetnea. Il trenino
+          gira attorno al vulcano fra vigne, colate e paesi di pietra scura, toccando
+          Castiglione di Sicilia, Randazzo, Bronte e la Contea di Nelson. Ci mette il suo
+          tempo, ed è esattamente il motivo per prenderlo.
+        </p>
+        <p class="addr" id="addrLine"></p>
+      </div>
 
-      <p class="addr" id="addrLine"></p>
-      <a class="btn btn-outline btn-light" id="mapsLink" href="#" target="_blank" rel="noopener noreferrer" data-i18n="dove.apri">Apri in Google Maps</a>
+      <div class="dove-map">
+        <!-- La mappa viene inserita da main.js all'apertura della pagina. -->
+        <div class="map-frame" id="mapFrame"></div>
+        <p class="micro-note" id="mapNote"></p>
+        <a class="btn btn-outline btn-light" id="mapsLink" href="#" target="_blank" rel="noopener noreferrer" data-i18n="dove.apri">Apri in Google Maps</a>
+      </div>
     </div>
 
-    <div class="dove-map">
-      <!-- La mappa viene inserita da main.js all'apertura della pagina. -->
-      <div class="map-frame" id="mapFrame"></div>
-      <p class="micro-note" id="mapNote"></p>
+    <!-- Seconda fascia: distanze e collegamenti, affiancati -->
+    <div class="dove-info">
+      <div class="dove-block">
+        <h3 data-i18n="dove.h2dist">Quanto dista</h3>
+        <ul class="dist-list" role="list">
+          <li><span>Marina di Cottone</span><b data-i18n="d.15">15 min</b></li>
+          <li><span>Fondachello</span><b data-i18n="d.20">20 min</b></li>
+          <li><span>Giardini Naxos</span><b data-i18n="d.25">25 min</b></li>
+          <li><span>Taormina</span><b data-i18n="d.30">30 min</b></li>
+          <li><span>Gole dell'Alcantara</span><b data-i18n="d.30b">30 min</b></li>
+          <li><span>Catania</span><b data-i18n="d.40">40 min</b></li>
+        </ul>
+        <p class="micro-note" data-i18n="dove.nota">
+          Tempi di percorrenza in auto, indicativi, calcolati da Piedimonte Etneo.
+        </p>
+      </div>
+
+      <div class="dove-block collegamenti">
+        <h3 data-i18n="dove.h3">Arrivare e muoversi</h3>
+        <ul role="list">
+          <li data-i18n="dove.t1"><b>Treno.</b> La stazione di Fiumefreddo di Sicilia, sulla
+            linea Messina-Catania, è a una decina di minuti d'auto. I regionali fermano a
+            Taormina-Giardini e proseguono fino a Catania Centrale, con la fermata
+            dell'aeroporto sulla stessa linea.</li>
+          <li data-i18n="dove.t2"><b>Autobus.</b> Interbus, Etna Trasporti e le autolinee
+            FCE collegano Piedimonte e Fiumefreddo con Taormina, Catania e l'aeroporto di
+            Fontanarossa. È la strada più semplice per chi arriva in volo e preferisce non
+            noleggiare un'auto.</li>
+          <li data-i18n="dove.t3"><b>Circumetnea.</b> La stazione è sotto casa: il giro del
+            vulcano comincia qui, senza mettersi al volante.</li>
+          <li data-i18n="dove.t4"><b>Auto.</b> Lo svincolo A18 di Fiumefreddo è vicinissimo
+            e ci si arriva in pochi minuti, per una strada semplice e senza traffico.
+            L'aeroporto di Catania Fontanarossa è a poco meno di un'ora.</li>
+        </ul>
+        <p class="micro-note" data-i18n="dove.t5">
+          Orari e fermate cambiano di stagione in stagione: conviene verificarli prima
+          di partire con Raffaele e Pina.
+        </p>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -453,7 +496,8 @@
       <p class="eyebrow" data-i18n="poi.eyebrow">Il territorio</p>
       <h2 data-i18n="poi.h">Da scoprire nei dintorni</h2>
       <p class="section-lead" data-i18n="poi.lead">
-        Dal vulcano al mare in mezz'ora. Distanze stradali indicative da Piedimonte Etneo.
+        Dalla lava all'acqua salata in mezz'ora. Le distanze sono stradali e indicative,
+        misurate da Piedimonte.
       </p>
     </header>
 
@@ -475,7 +519,7 @@
       <p class="eyebrow" data-i18n="tips.eyebrow">Da chi ci vive</p>
       <h2 data-i18n="tips.h">I nostri consigli</h2>
       <p class="section-lead" data-i18n="tips.lead">
-        Poche cose, ma quelle che fanno davvero la differenza sul posto.
+        Poche righe, di quelle che si imparano soltanto abitandoci.
       </p>
     </header>
 
@@ -484,11 +528,10 @@
         <summary><span data-i18n="tips.etna.t">Salire sull'Etna</span></summary>
         <div class="tip-body">
           <ul>
-            <li data-i18n="tips.etna.1">Partite presto: a metà mattina le nuvole risalgono dal mare e coprono la cima.</li>
-            <li data-i18n="tips.etna.2">In quota fa freddo tutto l'anno. Felpa, giacca a vento e scarpe chiuse anche ad agosto.</li>
-            <li data-i18n="tips.etna.3">Da qui il versante naturale è quello nord, Piano Provenzana, sopra Linguaglossa: meno affollato del Rifugio Sapienza.</li>
-            <li data-i18n="tips.etna.4">Per i crateri sommitali serve una guida alpina o vulcanologica autorizzata: prenotate prima. Stessa cosa per la Valle del Bove e la Grotta di Serracozzo, che partono dal Rifugio Citelli.</li>
-            <li data-i18n="tips.etna.5">Se non volete guidare in montagna, la Circumetnea gira il vulcano partendo dalla stazione vicino a casa.</li>
+            <li data-i18n="tips.etna.1">Si parte <b>presto</b>. A metà mattina le nuvole risalgono dal mare e la cima <i>sparisce fino a sera</i>.</li>
+            <li data-i18n="tips.etna.2">A tremila metri fa freddo anche <i>il quindici agosto</i>: <b>felpa, giacca a vento, scarpe chiuse</b>.</li>
+            <li data-i18n="tips.etna.3">Da questa parte del vulcano si sale da <b>Piano Provenzana</b>, sopra Linguaglossa: meno pullman che sul versante di Nicolosi, e i boschi <i>arrivano più in alto</i>.</li>
+            <li data-i18n="tips.etna.4">Per i <b>crateri sommitali</b> serve una guida alpina o vulcanologica autorizzata, e va prenotata. Lo stesso vale per la <b>Valle del Bove</b> e per la <b>Grotta di Serracozzo</b>, che partono dal <i>Rifugio Citelli</i>.</li>
           </ul>
         </div>
       </details>
@@ -497,11 +540,11 @@
         <summary><span data-i18n="tips.tao.t">Taormina senza stress</span></summary>
         <div class="tip-body">
           <ul>
-            <li data-i18n="tips.tao.1">In centro non si parcheggia: usate i parcheggi Lumbi o Porta Catania e le navette.</li>
-            <li data-i18n="tips.tao.2">Il Teatro Antico va visto appena apre o nell'ultima ora: la luce è migliore e la folla minore.</li>
-            <li data-i18n="tips.tao.3">Dalla funivia si scende a Mazzarò e a Isola Bella in pochi minuti, evitando i tornanti.</li>
-            <li data-i18n="tips.tao.4">Salite a Castelmola per il panorama: bastano venti minuti e cambia tutto. A metà strada fermatevi al santuario della Madonna della Rocca, scavato nella roccia.</li>
-            <li data-i18n="tips.tao.5">D'estate la sera è più fresca e il corso è più bello: cenate tardi, come si fa qui.</li>
+            <li data-i18n="tips.tao.1">In centro <b>non si parcheggia</b>. Si lascia l'auto al <b>Lumbi</b> o a <b>Porta Catania</b> e si sale con la <i>navetta</i>.</li>
+            <li data-i18n="tips.tao.2">Il <b>Teatro Antico</b> chiede la prima ora del mattino o l'ultima del pomeriggio: la pietra <i>si accende</i> e la folla si dirada.</li>
+            <li data-i18n="tips.tao.3">La <b>funivia</b> scende a Mazzarò in cinque minuti e risparmia <i>una decina di tornanti</i>.</li>
+            <li data-i18n="tips.tao.4">Venti minuti di salita e si è a <b>Castelmola</b>, dove il golfo si vede tutto in una volta. A metà strada c'è la chiesa della <b>Madonna della Rocca</b>, <i>scavata dentro la roccia</i>.</li>
+            <li data-i18n="tips.tao.5">D'estate il corso dà il meglio <i>dopo il tramonto</i>. Si cena <b>tardi</b>, come si usa qui.</li>
           </ul>
         </div>
       </details>
@@ -510,11 +553,11 @@
         <summary><span data-i18n="tips.mare.t">Il mare</span></summary>
         <div class="tip-body">
           <ul>
-            <li data-i18n="tips.mare.1">Le spiagge più vicine sono Marina di Cottone e Fondachello: ciottoli lavici scuri, acqua limpida, fondale che scende subito.</li>
-            <li data-i18n="tips.mare.2">Portate scarpette da scoglio: la ghiaia scotta e il fondo è irregolare.</li>
-            <li data-i18n="tips.mare.3">San Marco di Calatabiano è più ampia e tranquilla, buona con i bambini.</li>
-            <li data-i18n="tips.mare.4">Isola Bella è bellissima ma piccola: andateci presto, i posti finiscono entro le dieci. Gli scogli sono taglienti, le scarpe da mare qui servono davvero.</li>
-            <li data-i18n="tips.mare.5">Il vento di levante alza le onde in poche ore: se soffia, spostatevi verso Naxos.</li>
+            <li data-i18n="tips.mare.1"><b>Marina di Cottone</b> e <b>Fondachello</b> sono le più vicine: ciottoli neri, acqua che <i>si fa profonda a pochi metri da riva</i>.</li>
+            <li data-i18n="tips.mare.2">A mezzogiorno la <b>ghiaia lavica</b> scotta sul serio. Chi arriva scalzo <i>se ne accorge dopo tre passi</i>.</li>
+            <li data-i18n="tips.mare.3"><b>San Marco di Calatabiano</b> è più larga e più quieta, distesa <i>sotto il castello</i>.</li>
+            <li data-i18n="tips.mare.4">A <b>Isola Bella</b> si arriva presto o non si arriva: <i>entro le dieci</i> non resta un metro libero. E lo scoglio taglia, quindi meglio non toglierle, le <b>scarpe</b>.</li>
+            <li data-i18n="tips.mare.5">Basta mezza giornata di <b>levante</b> perché il mare si alzi. In quel caso si scende verso <b>Naxos</b>, dove la baia <i>ripara</i>.</li>
           </ul>
         </div>
       </details>
@@ -523,11 +566,11 @@
         <summary><span data-i18n="tips.borghi.t">Borghi e paesi</span></summary>
         <div class="tip-body">
           <ul>
-            <li data-i18n="tips.borghi.1">Castiglione di Sicilia: castello normanno e vista sulla valle dell'Alcantara.</li>
-            <li data-i18n="tips.borghi.2">Randazzo: la città nera, costruita interamente in pietra lavica.</li>
-            <li data-i18n="tips.borghi.3">Forza d'Agrò: borgo a picco sul mare con vista fino alla Calabria, le antiche chiese e il convento agostiniano con le sue cripte.</li>
-            <li data-i18n="tips.borghi.4">Bronte: pistacchio DOP, raccolto solo negli anni dispari.</li>
-            <li data-i18n="tips.borghi.5">Castelmola: uno dei Borghi più belli d'Italia, piazzetta panoramica e vino alla mandorla, sopra Taormina.</li>
+            <li data-i18n="tips.borghi.1"><b>Castiglione di Sicilia</b> guarda la valle dell'Alcantara dall'alto di un <i>castello normanno</i>.</li>
+            <li data-i18n="tips.borghi.2"><b>Randazzo</b> è nera per intero: portali, chiese, selciato, tutto tagliato nella <i>pietra lavica</i>.</li>
+            <li data-i18n="tips.borghi.3"><b>Forza d'Agrò</b> sta a picco sul mare e arriva a vedere la Calabria. Sotto il <b>convento agostiniano</b> ci sono le <i>cripte</i> dove riposavano i monaci.</li>
+            <li data-i18n="tips.borghi.4">A <b>Bronte</b> il pistacchio si raccoglie a anni alterni, <i>negli anni dispari</i>. Per questo costa quello che costa.</li>
+            <li data-i18n="tips.borghi.5"><b>Castelmola</b> è fra i Borghi più belli d'Italia: una piazzetta sospesa, il <i>vino alla mandorla</i>, e Taormina che resta sotto.</li>
           </ul>
         </div>
       </details>
@@ -536,17 +579,189 @@
         <summary><span data-i18n="tips.sapori.t">Sapori di Sicilia</span></summary>
         <div class="tip-body">
           <ul>
-            <li data-i18n="tips.sapori.1">La granita è colazione, non merenda: si mangia inzuppandoci la brioche col tuppo, seduti al bar alle otto del mattino. Mandorla, gelso o limone, e la scelta è la cosa più difficile della giornata.</li>
-            <li data-i18n="tips.sapori.2">Qui è arancino, al maschile, e si mangia in piedi al bancone scottandosi le dita. Sul genere non si discute con un palermitano.</li>
-            <li data-i18n="tips.sapori.3">Pasta alla Norma: melanzane fritte, pomodoro, basilico e una nevicata di ricotta salata. Porta il nome dell'opera di Bellini, che era catanese, e a Catania è una questione seria.</li>
-            <li data-i18n="tips.sapori.4">Al porto di Riposto il pesce si compra la mattina presto, quando le cassette sono ancora bagnate. Il pesce azzurro costa poco e sa di mare vero.</li>
-            <li data-i18n="tips.sapori.5">I vini dell'Etna nascono a poche curve da casa, su terra nera e vigne vecchie: Nerello Mascalese in rosso, Carricante in bianco. Le cantine aprono le porte, basta chiamare prima.</li>
-            <li data-i18n="tips.sapori.6">Nelle macellerie del paese la salsiccia si compra a metro, insaporita con i semi di finocchio. Con un formaggio locale e un pane di grano duro la cena è già decisa, e la cucina di casa è attrezzata per meritarselo.</li>
-            <li data-i18n="tips.sapori.7">Il pistacchio di Bronte e i cannoli riempiti al momento con ricotta di pecora si comprano l'ultimo giorno: è il modo più semplice per portarsi dietro la Sicilia ancora per qualche ora.</li>
+            <li data-i18n="tips.sapori.1">La <b>granita</b> è colazione, non merenda: si mangia inzuppandoci la <b>brioche col tuppo</b>, seduti al bar <i>alle otto del mattino</i>. Mandorla, gelso o limone, e la scelta è la cosa più difficile della giornata.</li>
+            <li data-i18n="tips.sapori.2">Qui è <b>arancino</b>, <i>al maschile</i>, e si mangia in piedi al bancone scottandosi le dita.</li>
+            <li data-i18n="tips.sapori.3"><b>Pasta alla Norma</b>: melanzane fritte, pomodoro, basilico e una <i>nevicata di ricotta salata</i>. Porta il nome dell'opera di Bellini, che era catanese, e a Catania è una questione seria.</li>
+            <li data-i18n="tips.sapori.4">Al <b>porto di Riposto</b> il pesce si compra la mattina presto, <i>quando le cassette sono ancora bagnate</i>. Il pesce azzurro costa poco e sa di mare vero.</li>
+            <li data-i18n="tips.sapori.5">I <b>vini dell'Etna</b> nascono a poche curve da casa, su terrazze di pietra e sabbia vulcanica: <i>Nerello Mascalese</i> in rosso, <i>Carricante</i> in bianco.</li>
+            <li data-i18n="tips.sapori.6">Nelle <b>macellerie</b> del paese la salsiccia si compra <i>a metro</i>, insaporita con i semi di finocchio. Con un formaggio e un pane di grano duro non serve altro.</li>
+            <li data-i18n="tips.sapori.7">I <b>cannoli</b> sono sempre una buona idea. Compratene l'ultimo giorno, con la <i>ricotta messa dentro davanti a voi</i>: è il modo più semplice per portarsi dietro la Sicilia ancora per qualche ora.</li>
           </ul>
         </div>
       </details>
+
+      <details class="tip">
+        <summary><span data-i18n="tips.feste.t">Feste e tradizioni</span></summary>
+        <div class="tip-body">
+          <ul>
+            <li data-i18n="tips.feste.1">Dal <i>3 al 5 febbraio</i> Catania si ferma per <b>sant'Agata</b>. Migliaia di devoti in sacco bianco tirano la vara per le strade, tutta la notte: è una delle processioni più affollate d'Italia e non somiglia a niente altro.</li>
+            <li data-i18n="tips.feste.2">Il <b>Carnevale di Acireale</b> cade <i>fra gennaio e febbraio</i>, secondo la Pasqua. Carri di cartapesta e carri infiorati, per più di una settimana.</li>
+            <li data-i18n="tips.feste.3"><b>Sant'Ignazio di Loyola</b>, patrono di Piedimonte, si celebra il <i>31 luglio</i>, e la prima domenica di agosto il paese resta sveglio fino ai fuochi.</li>
+            <li data-i18n="tips.feste.4">Nella frazione di <b>San Gerardo</b> tocca all'<i>ultima domenica di agosto</i>, per San Gerardo Maiella: una festa più piccola e più antica, di quelle che non finiscono sui manifesti.</li>
+            <li data-i18n="tips.feste.5">La <b>Festa Medievale di Randazzo</b>, d'<i>estate</i>, riporta il borgo al suo Medioevo: cortei in costume, sbandieratori e taverne fra i palazzi di pietra nera.</li>
+            <li data-i18n="tips.feste.6">La <b>Festa della Vendemmia</b> di Piedimonte, a <i>settembre</i>, porta in strada carretti addobbati, gruppi folkloristici e un palmento all'aperto dove si pigia l'uva come si faceva un tempo.</li>
+            <li data-i18n="tips.feste.7">La <b>Sagra del Pistacchio</b> di Bronte, fra <i>fine settembre e inizio ottobre</i>, riempie il paese di banchi, visite guidate e oro verde in ogni forma commestibile.</li>
+            <li data-i18n="tips.feste.8">Fra settembre e ottobre le <b>contrade dell'Etna</b> cambiano colore: le vigne passano dal verde al rosso <i>nel giro di due settimane</i>.</li>
+          </ul>
+          <p class="micro-note" data-i18n="tips.feste.nota">
+            Le date civili cambiano ogni anno: se venite per una festa in particolare,
+            chiedete conferma a Raffaele e Pina quando prenotate.
+          </p>
+        </div>
+      </details>
     </div>
+  </div>
+</section>
+
+
+
+<!-- ════════════════════════════════════════════════════════ CATANIA ══ -->
+<section class="section section-dark catania" id="catania">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow" data-i18n="cat.eyebrow">A quaranta minuti di autostrada</p>
+      <h2 data-i18n="cat.h">Catania, la città di pietra nera</h2>
+      <p class="section-lead" data-i18n="cat.lead">
+        La stessa montagna che si vede dal balcone, quarantacinque chilometri più a
+        sud, è diventata una città.
+      </p>
+    </header>
+
+    <div class="cat-testo">
+      <p data-i18n="cat.p1">
+        Nel 1669 la lava scese fino al mare e nel 1693 il terremoto finì il lavoro.
+        Quello che si attraversa oggi è una città rifatta quasi tutta in una volta,
+        con la stessa pietra scura e lo stesso barocco: dal 2002 il centro è
+        patrimonio dell'umanità insieme alle altre città tardobarocche del Val di Noto.
+      </p>
+      <p data-i18n="cat.p2">
+        È una città che si annusa prima di vederla: il pesce del mercato, il caffè
+        dei chioschi, la brioche appena sfornata. Il barocco arriva dopo, girato
+        l'angolo, e sorprende sempre.
+      </p>
+    </div>
+
+    <div class="cat-photos">
+      <figure class="cat-ph">
+        <div class="cat-ph-img">
+          <picture>
+            <source type="image/webp" srcset="assets/images/optimized/v-catania-liotru-640.webp 640w, assets/images/optimized/v-catania-liotru-1024.webp 1024w, assets/images/optimized/v-catania-liotru-1440.webp 1440w" sizes="(min-width:900px) 30vw, (min-width:560px) 45vw, 92vw">
+            <img src="assets/images/optimized/v-catania-liotru-1024.jpg" srcset="assets/images/optimized/v-catania-liotru-640.jpg 640w, assets/images/optimized/v-catania-liotru-1024.jpg 1024w, assets/images/optimized/v-catania-liotru-1440.jpg 1440w" sizes="(min-width:900px) 30vw, (min-width:560px) 45vw, 92vw" width="1024" height="1365" loading="lazy" decoding="async" style="object-position:50% 50%" data-i18n-alt="cat.ph.liotru.alt" alt="La fontana dell'Elefante in piazza del Duomo a Catania, con l'obelisco e l'elefante di pietra lavica">
+          </picture>
+          <a class="ph-credit" href="https://unsplash.com/photos/7xy3l9RV4Qw" target="_blank" rel="noopener noreferrer nofollow" title="Fotografia di Maria Bobrova su Unsplash">Maria Bobrova</a>
+        </div>
+        <figcaption data-i18n="cat.ph.liotru">La fontana dell'Elefante, in piazza del Duomo</figcaption>
+      </figure>
+      <figure class="cat-ph">
+        <div class="cat-ph-img">
+          <picture>
+            <source type="image/webp" srcset="assets/images/optimized/v-catania-crociferi-640.webp 640w, assets/images/optimized/v-catania-crociferi-1024.webp 1024w, assets/images/optimized/v-catania-crociferi-1440.webp 1440w" sizes="(min-width:900px) 30vw, (min-width:560px) 45vw, 92vw">
+            <img src="assets/images/optimized/v-catania-crociferi-1024.jpg" srcset="assets/images/optimized/v-catania-crociferi-640.jpg 640w, assets/images/optimized/v-catania-crociferi-1024.jpg 1024w, assets/images/optimized/v-catania-crociferi-1440.jpg 1440w" sizes="(min-width:900px) 30vw, (min-width:560px) 45vw, 92vw" width="1024" height="1365" loading="lazy" decoding="async" style="object-position:50% 45%" data-i18n-alt="cat.ph.crociferi.alt" alt="Via Crociferi a Catania, fra le facciate barocche delle chiese, con l'arco in fondo alla strada">
+          </picture>
+          <a class="ph-credit" href="https://unsplash.com/photos/f2PyFPC34Z8" target="_blank" rel="noopener noreferrer nofollow" title="Fotografia di Carla Lipani su Unsplash">Carla Lipani</a>
+        </div>
+        <figcaption data-i18n="cat.ph.crociferi">Via Crociferi, con l'arco che la scavalca</figcaption>
+      </figure>
+      <figure class="cat-ph">
+        <div class="cat-ph-img">
+          <picture>
+            <source type="image/webp" srcset="assets/images/optimized/v-catania-mercato-640.webp 640w, assets/images/optimized/v-catania-mercato-1024.webp 1024w, assets/images/optimized/v-catania-mercato-1440.webp 1440w" sizes="(min-width:900px) 30vw, (min-width:560px) 45vw, 92vw">
+            <img src="assets/images/optimized/v-catania-mercato-1024.jpg" srcset="assets/images/optimized/v-catania-mercato-640.jpg 640w, assets/images/optimized/v-catania-mercato-1024.jpg 1024w, assets/images/optimized/v-catania-mercato-1440.jpg 1440w" sizes="(min-width:900px) 30vw, (min-width:560px) 45vw, 92vw" width="1024" height="1365" loading="lazy" decoding="async" style="object-position:50% 50%" data-i18n-alt="cat.ph.mercato.alt" alt="Le bancarelle di un mercato di strada nel centro di Catania, sotto le tende da sole e i balconi">
+          </picture>
+          <a class="ph-credit" href="https://unsplash.com/photos/5R5zxf23u5k" target="_blank" rel="noopener noreferrer nofollow" title="Fotografia di Mateusz Butkiewicz su Unsplash">Mateusz Butkiewicz</a>
+        </div>
+        <figcaption data-i18n="cat.ph.mercato">Il mercato, la mattina, quando i banchi sono pieni</figcaption>
+      </figure>
+    </div>
+
+    <ul class="cat-grid" role="list">
+      <li class="cat-card">
+        <h3 data-i18n="cat.1.t">Piazza del Duomo e u Liotru</h3>
+        <p data-i18n="cat.1.d">Al centro della piazza un elefante di pietra lavica regge un obelisco egizio. I catanesi lo chiamano <b>u Liotru</b> ed è il simbolo della città: la fontana è del 1736, disegnata da Giovanni Battista Vaccarini.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.2.t">Cattedrale di Sant'Agata</h3>
+        <p data-i18n="cat.2.d">Dedicata alla patrona, custodisce anche la <i>tomba di Vincenzo Bellini</i>. La facciata alterna il nero della lava al bianco del calcare, come quasi tutto il centro.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.3.t">La Pescheria</h3>
+        <p data-i18n="cat.3.d">Il mercato del pesce, subito dietro il Duomo, in una piazza che scende sotto il livello della strada. <b>Si va la mattina presto</b>, prima delle undici, quando i banchi sono ancora pieni.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.4.t">Via Etnea</h3>
+        <p data-i18n="cat.4.d">La strada dritta che taglia il centro da sud a nord. Guardando in fondo, oltre i palazzi, <i>c'è il vulcano</i>: è il motivo per cui la via si chiama così.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.5.t">Monastero dei Benedettini</h3>
+        <p data-i18n="cat.5.d">San Nicolò l'Arena, fra i complessi monastici <b>più grandi d'Europa</b>, oggi sede dell'università. Si visita con una guida: sotto i pavimenti ci sono una casa romana e la colata del 1669.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.6.t">Teatro Romano e Odeon</h3>
+        <p data-i18n="cat.6.d">Un teatro antico <i>incastrato fra i palazzi</i> del quartiere Antico Corso, con l'acqua del fiume Amenano che continua a scorrere sotto le gradinate.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.anfi.t">Anfiteatro romano</h3>
+        <p data-i18n="cat.anfi.d">In piazza Stesicoro affiora <b>un decimo appena</b> della struttura, sotto il livello della strada. Il resto di quello che era uno degli anfiteatri più grandi d'Italia è rimasto <i>sotto i palazzi</i>, e ci è rimasto.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.7.t">Castello Ursino</h3>
+        <p data-i18n="cat.7.d">Voluto da <b>Federico II</b> nel Duecento, allora affacciato sul mare. La lava del 1669 gli è passata intorno e lo ha lasciato nell'entroterra. Dentro c'è il museo civico.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.8.t">Via Crociferi</h3>
+        <p data-i18n="cat.8.d">Duecento metri, <b>quattro chiese</b>, un arco che le scavalca. È la strada che i catanesi mostrano per prima quando vogliono far vedere il barocco.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.biscari.t">Palazzo Biscari</h3>
+        <p data-i18n="cat.biscari.d">La dimora dei principi Paternò Castello, cresciuta sulle mura di Carlo V dopo il terremoto del 1693. Il <b>salone delle feste</b> è rococò fino all'ultimo stucco, con una scala che sale al cupolino dove sedeva l'orchestra. È ancora una casa privata: <i>si visita su prenotazione</i>.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.9.t">Villa Bellini e il Teatro Massimo</h3>
+        <p data-i18n="cat.9.d">Il giardino pubblico con le scalinate e l'<i>orologio di fiori</i>, e a poche strade il teatro d'opera intitolato al compositore che qui è nato.</p>
+      </li>
+      <li class="cat-card">
+        <h3 data-i18n="cat.10.t">Il mare dentro la città</h3>
+        <p data-i18n="cat.10.d"><b>San Giovanni Li Cuti</b>, una caletta di ciottoli neri fra le case, e più a sud la <b>Playa</b>, chilometri di sabbia chiara.</p>
+      </li>
+      <li class="cat-card cat-card-wide">
+        <h3 data-i18n="cat.agata.t">Sant'Agata, dal 3 al 5 febbraio</h3>
+        <p data-i18n="cat.agata.d">Per tre giorni la città smette di fare qualsiasi altra cosa. Migliaia di devoti in sacco bianco tirano il fercolo della patrona per le strade, di notte e di giorno, dietro le candelore portate a spalla. Una <b>classifica non ufficiale</b>, fondata sul numero di persone che scendono in strada, la mette <b>terza fra le feste cattoliche del mondo</b>: prima la Settimana Santa di Siviglia, seconda il Corpus Domini di Cuzco, <i>e poi Catania</i>.</p>
+      </li>
+    </ul>
+
+    <div class="cat-note">
+      <div class="cat-note-b">
+        <h3 data-i18n="cat.tavola.t">A tavola</h3>
+        <p data-i18n="cat.tavola.d">
+          L'arancino, che qui è maschile e ha la punta. La pasta alla Norma, melanzane
+          fritte e ricotta salata. Il seltz limone e sale ai chioschi, la granita con la
+          brioche a colazione, la cipollina calda mangiata camminando.
+        </p>
+      </div>
+      <div class="cat-note-b">
+        <h3 data-i18n="cat.arrivo.t">Come arrivarci</h3>
+        <p data-i18n="cat.arrivo.d">
+          Circa 45 km dalla casa, poco più di quaranta minuti prendendo la A18 allo
+          svincolo di Fiumefreddo. In alternativa il treno, dalla stessa stazione di
+          Fiumefreddo fino a Catania Centrale. Conviene lasciare l'auto ai margini del
+          centro: dentro si cammina meglio.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ ITINERARI ══ -->
+<section class="section" id="itinerari">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow" data-i18n="iti.eyebrow">Idee di viaggio</p>
+      <h2 data-i18n="iti.h">Scopri la Sicilia da qui</h2>
+      <p class="section-lead" data-i18n="iti.lead">
+        Cinque giornate già pronte, costruite sulla posizione della casa.
+      </p>
+    </header>
+    <div class="iti-grid" id="itiGrid"><!-- generato da main.js --></div>
   </div>
 </section>
 
@@ -587,20 +802,6 @@
     <p class="rev-link">
       <a class="btn btn-outline" id="revAll" href="https://www.airbnb.it/rooms/540027/reviews" target="_blank" rel="noopener noreferrer" data-i18n="rev.all">Leggi tutte le recensioni su Airbnb</a>
     </p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════ ITINERARI ══ -->
-<section class="section" id="itinerari">
-  <div class="wrap">
-    <header class="section-head">
-      <p class="eyebrow" data-i18n="iti.eyebrow">Idee di viaggio</p>
-      <h2 data-i18n="iti.h">Scopri la Sicilia da qui</h2>
-      <p class="section-lead" data-i18n="iti.lead">
-        Cinque giornate già pronte, costruite sulla posizione della casa.
-      </p>
-    </header>
-    <div class="iti-grid" id="itiGrid"><!-- generato da main.js --></div>
   </div>
 </section>
 
@@ -689,8 +890,7 @@
       </ul>
       <h3 class="mt" data-i18n="foot.legale">Informazioni legali</h3>
       <ul role="list">
-        <li><a href="privacy.html" data-i18n="foot.privacy">Privacy Policy</a></li>
-        <li><a href="cookie.html"  data-i18n="foot.cookie">Cookie Policy</a></li>
+        <li><a href="privacy.html" data-i18n="foot.privacy">Privacy e cookie</a></li>
         <li><a href="crediti.html" data-i18n="foot.crediti">Crediti fotografici</a></li>
       </ul>
     </div>

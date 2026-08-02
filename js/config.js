@@ -14,7 +14,8 @@ window.SITE_CONFIG = {
   PROPERTY_NAME_EN: "Between Etna and Taormina",
   PROPERTY_SHORT: "Tra il fuoco dell'Etna",
   PROPERTY_TYPE: "Intero appartamento",          // fonte: annuncio Airbnb
-  HOST_NAME: "Raffaele",                          // fonte: annuncio Airbnb
+  HOST_NAME: "Raffaele e Pina",                   // fonte: annuncio Airbnb
+  HOST_NAME_EN: "Raffaele and Pina",              // la stessa coppia, con la "e" inglese
   // L'annuncio Airbnb dichiara "14 anni da host": nel 2026 corrisponde al 2012.
   // Se conosci l'anno esatto in cui hai cominciato, correggilo qui.
   HOST_SINCE_YEAR: 2012,

@@ -428,39 +428,31 @@ ul[role="list"]{list-style:none}
 .stay-notes strong{color:var(--testo);font-weight:600}
 
 /* ═══════════════════════════════════════════════════════════════ GALLERY */
+/* Il nastro scorre da solo e non ha né inizio né fine: nessuno spazio vuoto
+   ai lati, le fotografie riempiono la fascia da un bordo all'altro. */
 .carousel{position:relative;margin-block:0 1.8rem}
 .carousel-viewport{
   overflow-x:auto;overflow-y:hidden;
-  scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+  scrollbar-width:none;overscroll-behavior-x:contain;
 }
 .carousel-viewport::-webkit-scrollbar{display:none}
 .carousel-viewport:focus-visible{outline:2px solid var(--terra);outline-offset:-2px}
 .carousel-track{display:flex;list-style:none;margin:0;padding:0}
-.car-slide{
-  flex:0 0 100%;scroll-snap-align:center;
-  padding-inline:calc(var(--gutter) / 2);
-}
-@media (min-width:760px){
-  .car-slide{flex-basis:64%;padding-inline:.6rem}
-  .carousel-track{padding-inline:18%}
-}
-@media (min-width:1400px){
-  .car-slide{flex-basis:56%}
-  .carousel-track{padding-inline:22%}
-}
+.car-slide{flex:0 0 auto;width:82vw;padding-inline:.3rem}
+@media (min-width:760px){.car-slide{width:46vw;padding-inline:.45rem}}
+@media (min-width:1200px){.car-slide{width:34vw}}
+@media (min-width:1600px){.car-slide{width:28vw}}
 .car-slide button{
   display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;
   border-radius:var(--r-md);overflow:hidden;position:relative;
 }
 .car-slide img{
   width:100%;aspect-ratio:3/2;object-fit:cover;
-  transition:transform .6s cubic-bezier(.2,.7,.3,1),opacity .4s ease;
+  transition:transform .6s cubic-bezier(.2,.7,.3,1);
   background:var(--calce-3);
 }
-.car-slide:not(.is-current) img{opacity:.5}
-.car-slide button:hover img{transform:scale(1.02)}
+.car-slide button:hover img{transform:scale(1.03)}
 
 .car-nav{
   position:absolute;top:calc(50% - 34px);transform:translateY(-50%);z-index:5;
@@ -480,13 +472,21 @@ ul[role="list"]{list-style:none}
   margin-top:1.4rem;flex-wrap:wrap;
 }
 .car-caption{font-size:.87rem;color:var(--testo-soft);margin:0;max-width:52ch}
-.car-dots{display:flex;gap:.45rem;flex-wrap:wrap}
-.car-dots button{
-  width:26px;height:3px;border:0;padding:0;cursor:pointer;border-radius:2px;
-  background:var(--calce-3);transition:background-color .25s ease,width .25s ease;
+
+/* pausa e avanzamento */
+.car-tools{display:flex;align-items:center;gap:.9rem;flex:0 0 auto}
+.car-play{
+  width:32px;height:32px;flex:0 0 auto;border-radius:50%;cursor:pointer;
+  border:1px solid var(--calce-3);background:var(--calce);
+  display:grid;place-items:center;transition:background-color .2s ease,border-color .2s ease;
 }
-.car-dots button:hover{background:var(--pietra-chiara)}
-.car-dots button[aria-selected="true"]{background:var(--terra);width:40px}
+.car-play:hover{background:#fff;border-color:var(--pietra-chiara)}
+.car-play svg{width:14px;height:14px;stroke:var(--lava-800);stroke-width:1.8;stroke-linecap:round;fill:none;grid-area:1/1}
+.car-play .ic-play{fill:var(--lava-800);stroke:none}
+.carousel:not(.is-paused) .car-play .ic-play,
+.carousel.is-paused .car-play .ic-pause{display:none}
+.car-prog{width:clamp(90px,16vw,180px);height:2px;background:var(--calce-3);border-radius:2px;overflow:hidden}
+.car-prog span{display:block;height:100%;width:0;background:var(--terra)}
 
 .gal-actions{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-top:1rem}
 .gal-count{font-size:.84rem;color:var(--pietra);margin:0}
@@ -515,25 +515,54 @@ ul[role="list"]{list-style:none}
 .masonry button:hover img{transform:scale(1.03)}
 
 /* ══════════════════════════════════════════════════════════ DOVE SIAMO ══ */
+/* Prima fascia: testo e mappa affiancati, di altezza simile.
+   Le informazioni pratiche stanno nella fascia sotto, così su desktop
+   la colonna della mappa non resta mezza vuota. */
 .grid-dove{display:grid;gap:clamp(2.5rem,5vw,4rem);align-items:start}
-@media (min-width:960px){.grid-dove{grid-template-columns:.95fr 1.05fr}}
+@media (min-width:960px){.grid-dove{grid-template-columns:1fr 1.05fr}}
+.grid-dove>*{min-width:0}
 .dove-text p{max-width:56ch}
-.dist-list{
-  list-style:none;margin:2.2rem 0 0;
+.dove-map .micro-note{margin-bottom:1.4rem}
+
+/* Seconda fascia: distanze e collegamenti, uno accanto all'altro */
+.dove-info{
+  display:grid;gap:clamp(2rem,4vw,3.5rem);
+  margin-top:clamp(2.6rem,5vw,4rem);
+  padding-top:clamp(2rem,4vw,3rem);
   border-top:1px solid rgba(237,230,218,.16);
 }
+@media (min-width:760px){.dove-info{grid-template-columns:.85fr 1.15fr}}
+.dove-info>*{min-width:0}
+.dove-block h3{
+  font-family:var(--font-body);font-size:.72rem;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ocra);margin-bottom:1.2rem;
+}
+
+.dist-list{list-style:none;margin:0;border-top:1px solid rgba(237,230,218,.16)}
 .dist-list li{
   display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-  padding:.85rem 0;border-bottom:1px solid rgba(237,230,218,.16);
-  font-size:.95rem;
+  padding:.7rem 0;border-bottom:1px solid rgba(237,230,218,.16);
+  font-size:.94rem;
 }
 .dist-list span{color:var(--su-scuro)}
 .dist-list b{
   font-family:var(--font-display);font-weight:400;font-size:1.05rem;
   color:var(--ocra);white-space:nowrap;
 }
-.addr{margin:2rem 0 1.2rem!important;font-size:.92rem;color:var(--su-scuro-soft)!important;line-height:1.6}
+.addr{margin:1.8rem 0 0!important;font-size:.92rem;color:var(--su-scuro-soft)!important;line-height:1.6}
 .addr .todo{color:var(--terra-chiara);font-weight:600}
+
+/* Arrivare e muoversi */
+.collegamenti ul{list-style:none;display:grid;gap:.85rem}
+.collegamenti li{
+  position:relative;padding-left:1.4rem;
+  font-size:.94rem;line-height:1.55;color:var(--su-scuro);
+}
+.collegamenti li::before{
+  content:"";position:absolute;left:0;top:.6em;
+  width:6px;height:6px;background:var(--ocra);border-radius:50%;
+}
+.collegamenti b{color:#FFFCF6;font-weight:600}
 
 .map-frame{
   position:relative;aspect-ratio:4/3;width:100%;
@@ -577,6 +606,8 @@ ul[role="list"]{list-style:none}
 .ph-credit::before{content:"Foto ";opacity:.6}
 html[lang="en"] .ph-credit::before{content:"Photo "}
 .ph-credit:hover{background:rgba(14,12,10,.88);color:#FFFCF6;text-decoration:underline}
+.ph-credit-casa{cursor:default}
+.ph-credit-casa:hover{background:rgba(14,12,10,.62);text-decoration:none}
 .iti .ph-credit{bottom:auto;top:0;right:0;border-radius:0 0 0 2px}
 
 .poi-cats{
@@ -625,6 +656,8 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
 .tip-body li{
   position:relative;padding-left:1.5rem;font-size:.96rem;color:var(--testo-soft);line-height:1.6;
 }
+.tip-body li b{color:var(--testo);font-weight:600}
+.tip-body li i{font-style:italic;color:var(--testo)}
 .tip-body li::before{
   content:"";position:absolute;left:0;top:.62em;
   width:6px;height:6px;background:var(--terra);border-radius:50%;
@@ -689,32 +722,100 @@ html[lang="en"] .ph-credit::before{content:"Photo "}
 .theme-list b{font-family:var(--font-display);font-size:1rem;color:var(--terra);font-weight:400}
 .rev-link{margin-top:2.6rem}
 
+/* ═════════════════════════════════════════════════════════════ CATANIA ══ */
+/* Il testo corre su due colonne quando c'è spazio: due paragrafi larghi
+   lasciavano mezza fascia vuota. Le fotografie stanno sotto, in fila. */
+.cat-testo{margin-bottom:clamp(2.2rem,4vw,3.2rem)}
+.cat-testo p{color:var(--su-scuro-soft);max-width:62ch}
+.cat-testo p + p{margin-top:1.1em}
+
+.cat-photos{
+  display:grid;gap:1.2rem;margin-bottom:clamp(2.6rem,5vw,4rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));
+}
+.cat-ph{margin:0}
+.cat-ph-img{position:relative;border-radius:var(--r-md);overflow:hidden;background:var(--lava-700)}
+.cat-ph img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.cat-ph figcaption{margin-top:.7rem;font-size:.83rem;line-height:1.5;color:var(--su-scuro-soft)}
+
+.cat-grid{
+  list-style:none;display:grid;gap:1px;background:var(--lava-600);
+  border:1px solid var(--lava-600);border-radius:var(--r-md);overflow:hidden;
+  grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));
+}
+.cat-card{background:var(--lava-800);padding:1.6rem 1.5rem 1.75rem}
+@media (min-width:860px){.cat-card-wide{grid-column:span 2}}
+.cat-card h3{
+  font-family:var(--font-display);font-weight:400;font-size:1.12rem;
+  color:var(--calce);margin-bottom:.55rem;line-height:1.25;
+}
+.cat-card p{color:var(--su-scuro-soft);font-size:.94rem;line-height:1.68}
+.cat-card b{color:var(--su-scuro);font-weight:500}
+.cat-card i{color:var(--ocra);font-style:italic}
+
+.cat-note{display:grid;gap:1.6rem;margin-top:2.6rem}
+.cat-note-b{border-top:2px solid var(--terra-chiara);padding-top:1.2rem}
+.cat-note-b h3{
+  font-family:var(--font-display);font-weight:400;font-size:1.05rem;
+  color:var(--calce);margin-bottom:.5rem;
+}
+.cat-note-b p{color:var(--su-scuro-soft);font-size:.94rem;line-height:1.68;max-width:52ch}
+
+@media (min-width:760px){
+  .cat-note{grid-template-columns:1fr 1fr;gap:2.4rem}
+}
+@media (min-width:900px){
+  .cat-testo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,4vw,3.5rem)}
+  .cat-testo p{max-width:none}
+  .cat-testo p + p{margin-top:0}
+}
+
 /* ═══════════════════════════════════════════════════════════ ITINERARI ══ */
 .iti-grid{display:grid;gap:1.6rem;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
+/* Ogni scheda è divisa allo stesso modo, qualunque sia il numero di tappe:
+   in alto una finestra di fotografia pulita, sempre della stessa altezza;
+   poi una fascia di sfumatura; sotto il nero pieno, dove sta il testo.
+   La sfumatura è agganciata al blocco di testo e misurata in pixel, non in
+   percentuale: così comincia e finisce nello stesso punto su tutte. */
 .iti{
+  --iti-foto:170px;      /* fotografia in chiaro */
+  --iti-sfuma:88px;      /* passaggio dalla fotografia al nero */
   position:relative;border-radius:var(--r-md);overflow:hidden;
-  background:var(--lava-800);color:var(--su-scuro);
-  display:flex;flex-direction:column;min-height:390px;
+  background:#0E0C0A;color:var(--su-scuro);
+  display:flex;flex-direction:column;min-height:440px;
+  padding-top:var(--iti-foto);
   isolation:isolate;
 }
-.iti-media{position:absolute;inset:0;z-index:-2}
-.iti-media img{width:100%;height:100%;object-fit:cover}
-.iti::after{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(to top,rgba(14,12,10,.96) 25%,rgba(14,12,10,.72) 58%,rgba(14,12,10,.3) 100%);
+/* La fotografia occupa solo la fascia alta più la sfumatura. Sotto è nero
+   pieno: così il ritaglio resta largo e mostra il soggetto invece di una
+   striscia verticale di cielo. */
+.iti-media{
+  position:absolute;left:0;right:0;top:0;z-index:-2;
+  height:calc(var(--iti-foto) + var(--iti-sfuma));
 }
-.iti-body{margin-top:auto;padding:1.7rem 1.6rem 1.8rem}
+.iti-media img{width:100%;height:100%;object-fit:cover}
+.iti-body{
+  flex:1;
+  padding:var(--iti-sfuma) 1.6rem 1.8rem;
+  background:linear-gradient(to bottom,
+    rgba(14,12,10,0)    0,
+    rgba(14,12,10,.42)  calc(var(--iti-sfuma) * .38),
+    rgba(14,12,10,.86)  calc(var(--iti-sfuma) * .72),
+    #0E0C0A             var(--iti-sfuma));
+}
 .iti-badge{
   display:inline-block;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;
   font-weight:600;color:var(--ocra);border:1px solid rgba(190,138,61,.5);
   padding:.28rem .6rem;border-radius:2px;margin-bottom:.9rem;
 }
-.iti h3{color:#FFFCF6;font-size:1.45rem;margin-bottom:.7em}
+.iti h3{color:#FFFCF6;font-size:1.45rem;margin-bottom:.7em;text-shadow:0 1px 6px rgba(11,9,7,.55)}
 .iti ol{list-style:none;padding:0;margin:0;counter-reset:step;display:grid;gap:.5rem}
 .iti li{
   counter-increment:step;position:relative;padding-left:1.85rem;
-  font-size:.87rem;line-height:1.5;color:rgba(237,230,218,.86);
+  font-size:.87rem;line-height:1.5;color:rgba(237,230,218,.92);
+  text-shadow:0 1px 3px rgba(11,9,7,.6);
 }
+@media (max-width:559px){.iti{--iti-foto:200px}}
 .iti li::before{
   content:counter(step);position:absolute;left:0;top:0;
   width:1.15rem;height:1.15rem;border-radius:50%;
