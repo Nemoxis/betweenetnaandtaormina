@@ -47,6 +47,13 @@ SELECTION = [
     ("Taormina_xihao-liu-ADOO1jwhXas-unsplash.jpg",            "v-taormina-costa"),
 ]
 
+# Fotografie della struttura finite in Visit/: non vengono da Unsplash, quindi
+# dal nome del file non si ricava nessun autore e il credito resta "della
+# struttura", come per le altre fotografie di casa.
+SELECTION_CASA = [
+    ("Circumetnea_.jpeg", "circumetnea"),
+]
+
 QUALITY_WEBP = 74
 QUALITY_JPEG = 78
 
@@ -84,7 +91,23 @@ def main():
         autore, pid = credito(fname)
         print("%-24s %5dx%-5d  %-22s %s" % (slug, ow, oh, autore, pid))
 
-    print("\n%d immagini elaborate." % (len(SELECTION) - len(mancanti)))
+    for fname, slug in SELECTION_CASA:
+        path = os.path.join(SRC, fname)
+        if not os.path.exists(path):
+            mancanti.append(fname)
+            continue
+        im = Image.open(path).convert("RGB")
+        ow, oh = im.size
+        for w in widths_for(ow):
+            h = round(oh * w / ow)
+            rs = im.resize((w, h), Image.LANCZOS)
+            rs.save(os.path.join(OUT, "%s-%d.webp" % (slug, w)), "WEBP",
+                    quality=QUALITY_WEBP, method=6)
+            rs.save(os.path.join(OUT, "%s-%d.jpg" % (slug, w)), "JPEG",
+                    quality=QUALITY_JPEG, optimize=True, progressive=True)
+        print("%-24s %5dx%-5d  %-22s %s" % (slug, ow, oh, "della struttura", ""))
+
+    print("\n%d immagini elaborate." % (len(SELECTION) + len(SELECTION_CASA) - len(mancanti)))
     if mancanti:
         print("ATTENZIONE: non trovate in Visit/: %s" % ", ".join(mancanti))
 

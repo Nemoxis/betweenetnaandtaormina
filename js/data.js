@@ -115,7 +115,8 @@ window.PHOTOS_TERRITORIO = {
   "catania-duomo":        { w:[640,1024,1440], it:"Piazza Duomo a Catania con la fontana dell'Elefante", en:"Piazza Duomo in Catania with the Elephant fountain" },
   "spiaggia-ionica":      { w:[640,1024,1440], it:"Spiaggia di ghiaia lavica sulla costa ionica", en:"Lava-pebble beach on the Ionian coast" },
   "mare-tramonto":        { w:[640,1024,1440], it:"Il mare Ionio all'alba dalla spiaggia", en:"The Ionian Sea at dawn from the beach" },
-  "piedimonte-festa":     { w:[640,1024,1440], it:"Rievocazione storica serale a Piedimonte Etneo", en:"Evening historical re-enactment in Piedimonte Etneo" }
+  "piedimonte-festa":     { w:[640,1024,1440], it:"Rievocazione storica serale a Piedimonte Etneo", en:"Evening historical re-enactment in Piedimonte Etneo" },
+  "circumetnea":          { w:[640,1024,1440], p:"50% 50%", it:"Un'automotrice verde e crema della Ferrovia Circumetnea ferma in stazione", en:"A green and cream railcar of the Circumetnea Railway standing at a station" }
 };
 
 
@@ -242,7 +243,7 @@ window.POI = [
     it:{ n:"Linguaglossa e la Pineta Ragabo", d:"Il paese-porta dell'Etna nord, con la sua pineta secolare e le strade forestali che salgono verso quota 1800.", km:"circa 8 km", t:"circa 12 min" },
     en:{ n:"Linguaglossa and Pineta Ragabo", d:"The gateway town to northern Etna, with its centuries-old pine wood and forest roads climbing to 1,800 m.", km:"about 8 km", t:"about 12 min" } },
 
-  { cat:["cultura","borghi"], img:"piedimonte-festa",
+  { cat:["cultura","borghi"], img:"circumetnea",
     it:{ n:"Ferrovia Circumetnea", d:"La stazione è a pochi passi dalla casa: il trenino compie il giro del vulcano tra vigne, colate e paesi in pietra lavica.", km:"a pochi passi", t:"" },
     en:{ n:"Circumetnea Railway", d:"The station is a few steps from the house: the little train circles the volcano through vineyards, lava flows and stone villages.", km:"a few steps away", t:"" } },
 
